@@ -6,5 +6,11 @@
         {
 
         }
+
+        public override void Attack(Unit target)
+        {
+            base.Attack(target);
+            Console.WriteLine("**");
+        }
     }
 }

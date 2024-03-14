@@ -1,4 +1,6 @@
-﻿namespace MiniProject.GameManager
+﻿using MiniProject.Unit;
+
+namespace MiniProject.GameManager
 {
     public class GameManager
     {
@@ -13,12 +15,6 @@
                 instance = new GameManager();
             }
             return instance;
-        }
-        public static void StartGame()
-        {
-            Console.WriteLine("게임을 시작합니다.");
-
-            InitPlayer();
         }
     }
 }

@@ -19,7 +19,14 @@
 
         public virtual void Attack(Unit target)
         {
+            int damage = atk - target.def;
+            target.hp -= damage;
+            Console.WriteLine($"{name}이(가) {target.name}을(를) 공격하여 {damage}의 피해를 입혔습니다.");
+        }
 
+        public virtual void DisplayStatus()
+        {
+            Console.WriteLine($"이름 : {name} | HP : {hp}");
         }
     }
 }
