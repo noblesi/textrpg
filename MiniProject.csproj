@@ -8,15 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Data.cs" />
+    <Compile Remove="Data\SQLData.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Data\Data.cs" />
+    <None Include="Data\SQLData.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

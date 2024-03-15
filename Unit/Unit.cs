@@ -1,12 +1,12 @@
 ﻿namespace MiniProject.Unit
 {
-    class Unit
+    public class Unit
     {
-        string name {  get; set; }
-        int hp {  get; set; }
-        int atk {  get; set; }
-        int def {  get; set; }
-        int speed {  get; set; }
+        protected string name {  get; set; }
+        protected int hp {  get; set; }
+        protected int atk {  get; set; }
+        protected int def {  get; set; }
+        protected int speed {  get; set; }
 
         public Unit(string name, int hp, int atk, int def, int speed)
         {

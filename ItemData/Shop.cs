@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniProject.Item
+namespace MiniProject.ItemData
 {
-    internal class Item
+    public static class Shop
     {
+        
     }
 }

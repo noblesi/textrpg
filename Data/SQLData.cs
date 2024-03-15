@@ -2,7 +2,7 @@
 
 namespace MiniProject.Data;
 
-internal class Data
+internal class SQLData
 {
     static void DBConnect()
     {

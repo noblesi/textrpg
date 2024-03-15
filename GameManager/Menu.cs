@@ -22,6 +22,8 @@
 
         public static void DisplayStatusMenu(string[] menuItems, int selectedIndex)
         {
+            Console.WriteLine("기본스탯으로 진행하시겠습니까 아니면 랜덤스탯으로 진행하겠습니까?");
+
             for (int i = 0; i < menuItems.Length; i++)
             {
                 int padding = (width - menuItems[i].Length) / 2;
@@ -30,7 +32,7 @@
                     Console.ForegroundColor = ConsoleColor.Yellow; // 선택된 메뉴는 노란색으로 출력
                 }
                 Console.WriteLine(menuItems[i].PadLeft(padding + menuItems[i].Length));
-                Console.WriteLine("\t\t");
+                Console.WriteLine("\n\n");
                 Console.ResetColor(); // 폰트 색상을 초기화
             }
         }
@@ -135,6 +137,12 @@
                 case "3. 게임종료":
                     Environment.Exit(1);
                     return;
+                case "1. 기본스탯":
+                    Console.WriteLine("기본 스탯이 선택되었습니다.");
+                    break;
+                case "2. 랜덤스탯":
+                    Console.WriteLine("랜덤 스탯이 선택되었습니다.");
+                    break;
             }
         }
     }

@@ -16,8 +16,10 @@ namespace MiniProject.GameManager
 
             Thread.Sleep(1000);
 
-            Console.WriteLine("기본스탯으로 진행하시겠습니까 아니면 랜덤스탯으로 진행하겠습니까?");
+            Console.Clear();
+
             Menu.SelectStatusMenu(menuData.StatusMenu);
+
         }
     }
 }
