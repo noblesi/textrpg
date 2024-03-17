@@ -138,9 +138,11 @@
                     Environment.Exit(1);
                     return;
                 case "1. 기본스탯":
+                    //GameManager.SetFixedStatus();
                     Console.WriteLine("기본 스탯이 선택되었습니다.");
                     break;
                 case "2. 랜덤스탯":
+                    //GameManager.SetRandomStatus();
                     Console.WriteLine("랜덤 스탯이 선택되었습니다.");
                     break;
             }
