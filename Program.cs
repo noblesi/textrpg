@@ -35,6 +35,8 @@ namespace MiniProject
 
             GameManager.Title.TitleAlignment();
 
+
+
             Utility.WriteCenterPosition("1. 게임시작");
             Console.WriteLine("\n\n");
             Utility.WriteCenterPosition("2. 불러오기");
@@ -49,7 +51,6 @@ namespace MiniProject
                     Console.WriteLine("게임이 시작되었습니다.");
                     Console.Clear();
                     GamePlay.StartGame();
-
                     break;
                 case 2:
                     Console.WriteLine("저장된 게임을 불러옵니다.");

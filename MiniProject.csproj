@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Compile Remove="Unit\**" />
+    <EmbeddedResource Remove="Unit\**" />
+    <None Remove="Unit\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Unit\" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>
