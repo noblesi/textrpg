@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniProject.ItemData
+namespace MiniProject
 {
     // ID
     // 1-Sword, 2-Spear, 3-Axe, 4-Healing, 5-Buff, 6-Scroll
@@ -14,15 +14,15 @@ namespace MiniProject.ItemData
     public class Item
     {
         public string Name { get; set; }
-        public static int AddAtk {  get; set; }
-        public static int AddDef {  get; set; }
-        public static int AddSpd {  get; set; }
-        public int Value {  get; set; }
-        public int Quantity {  get; set; }
+        //public static int AddAtk { get; set; }
+        //public static int AddDef { get; set; }
+        //public static int AddSpd { get; set; }
+        public int Value { get; set; }
+        public int Quantity { get; set; }
         public string Description { get; set; }
-        public int Id {  get; set; }
-        public bool isEquipped {  get; set; }
-        public int _type {  get; set; }
+        public int Id { get; set; }
+        public bool isEquipped { get; set; }
+        public int _type { get; set; }
         //protected static int exp {  get; set; }
         //protected static int maxExp {  get; set; }
 
@@ -37,12 +37,9 @@ namespace MiniProject.ItemData
             _type = type;
         }
 
-        public Item(string name, int atk, int def, int spd, int type, int id, string description)
+        public Item(string name, int type, int id, string description)
         {
             Name = name;
-            AddAtk = atk;
-            AddDef = def;
-            AddSpd = spd;
             Id = id;
             Description = description;
             _type = type;
@@ -53,20 +50,20 @@ namespace MiniProject.ItemData
 
     public class Sword : Item
     {
-        private int ATK;
-        private int DEF;
-        private int SPD;
+        public int ATK {  get; set; }
+        public int DEF {  get; set; }
+        public int SPD {  get; set; }
         private int exp;
         private int maxExp = 100;
 
-        public Sword(string name, int atk, int def, int spd, int type, int id, string description) : base(name, atk, def, spd, type, id, description)
+        public Sword(string name, int type, int id, string description, int atk, int def, int spd) : base(name, type, id, description)
         {
-            isEquipped = false;
-            exp = 0;
-            Quantity = 1;
             ATK = atk;
             DEF = def;
             SPD = spd;
+            isEquipped = false;
+            exp = 0;
+            Quantity = 1;
         }
 
         public void GetExp(MonsterType type)
@@ -127,19 +124,24 @@ namespace MiniProject.ItemData
             Console.WriteLine($"방어력이 {DefIncrease}만큼 상승했습니다.");
             Console.WriteLine($"속도가 {SpdIncrease}만큼 상승했습니다.");
 
-            AddAtk += AtkIncrease;
-            AddDef += DefIncrease;
-            AddSpd += SpdIncrease;
+            ATK += AtkIncrease;
+            DEF += DefIncrease;
+            SPD += SpdIncrease;
         }
     }
 
     public class Axe : Item
     {
-        
+        public int ATK { get; set; }
+        public int DEF { get; set; }
+        public int SPD { get; set; }
         private int exp;
         private int maxExp = 100;
-        public Axe(string name, int atk, int def, int spd, int type, int id, string description) : base(name, atk, def, spd, type, id, description)
+        public Axe(string name, int type, int id, string description, int atk, int def, int spd) : base(name, type, id, description)
         {
+            ATK = atk;
+            DEF = def;
+            SPD = spd;
             isEquipped = false;
             exp = 0;
             Quantity = 1;
@@ -202,19 +204,24 @@ namespace MiniProject.ItemData
             Console.WriteLine($"방어력이 {DefIncrease}만큼 상승했습니다.");
             Console.WriteLine($"속도가 {SpdIncrease}만큼 상승했습니다.");
 
-            AddAtk += AtkIncrease;
-            AddDef += DefIncrease;
-            AddSpd += SpdIncrease;
+            ATK += AtkIncrease;
+            DEF += DefIncrease;
+            SPD += SpdIncrease;
         }
     }
 
-    public class Spear : Item 
+    public class Spear : Item
     {
-        
+        public int ATK { get; set; }
+        public int DEF { get; set; }
+        public int SPD { get; set; }
         private int exp;
         private int maxExp = 100;
-        public Spear(string name, int atk, int def, int spd, int type, int id, string description) : base(name, atk, def, spd, type, id, description)
+        public Spear(string name, int type, int id, string description, int atk, int def, int spd) : base(name, type, id, description)
         {
+            ATK = atk;
+            DEF = def;
+            SPD = spd;
             isEquipped = false;
             exp = 0;
             Quantity = 1;
@@ -277,9 +284,9 @@ namespace MiniProject.ItemData
             Console.WriteLine($"방어력이 {DefIncrease}만큼 상승했습니다.");
             Console.WriteLine($"속도가 {SpdIncrease}만큼 상승했습니다.");
 
-            AddAtk += AtkIncrease;
-            AddDef += DefIncrease;
-            AddSpd += SpdIncrease;
+            ATK += AtkIncrease;
+            DEF += DefIncrease;
+            SPD += SpdIncrease;
         }
     }
 

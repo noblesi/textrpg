@@ -1,5 +1,4 @@
 ﻿using MiniProject.GameManager;
-using MiniProject.ItemData;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -16,7 +15,7 @@ namespace MiniProject
         public static int P_spd { get; set; }
         public static bool isBuffed { get; set; }
         public static int gold {  get; set; }
-
+        //public Item EquippedItem { get; set; }
         public static Dictionary<int, Item> Inventory { get; set; } // 
         
         public Player(string name)
@@ -24,10 +23,9 @@ namespace MiniProject
             this.name = name;
             Inventory = new Dictionary<int, Item>();
             
-
-            Item AncientSword = new Sword("고대의 검", 10, 0, 3, 0, 0, "유저와 함께 성장하는 성장형 검입니다.");
-            Item AncientSpear = new Spear("고대의 창", 15, 0, 0, 1, 1, "유저와 함께 성장하는 성장형 창입니다.");
-            Item AncientAxe = new Axe("고대의 도끼", 20, 0, -3, 2, 2, "유저와 함께 성장하는 성장형 도끼입니다.");
+            Item AncientSword = new Sword("고대의 검", 0, 0, "유저와 함께 성장하는 성장형 검입니다.", 10, 0, 3);
+            Item AncientSpear = new Spear("고대의 창", 1, 1, "유저와 함께 성장하는 성장형 창입니다.", 15, 0, 0);
+            Item AncientAxe = new Axe("고대의 도끼", 2, 2, "유저와 함께 성장하는 성장형 도끼입니다.", 20, 0, -3);
 
             Inventory.Add(0, AncientSword);
             Inventory.Add(1, AncientSpear);
@@ -125,7 +123,7 @@ namespace MiniProject
             SelectInventoryMenu(player);
         }
 
-        public static void EquipWeapon()
+        public static void EquipWeapon(Player player)
         {
             Console.WriteLine("장착할 무기를 선택하세요.(0 : 고대의 검 1 : 고대의 창 2. 고대의 도끼)");
             int SelectedWeapon = int.Parse(Console.ReadLine());
@@ -134,17 +132,25 @@ namespace MiniProject
 
             Console.WriteLine($"{Inventory[SelectedWeapon].Name} 장착성공!");
 
-            switch (SelectedWeapon)
+            Item item = Inventory[SelectedWeapon];
+
+            if(item is Sword sword)
             {
-                case 0:
-                    AddSwordStat();
-                    break;
-                case 1:
-                    AddSpearStat();
-                    break;
-                case 2:
-                    AddAxeStat();
-                    break;
+                P_atk += sword.ATK;
+                P_def += sword.DEF;
+                P_spd += sword.SPD;
+            }
+            else if(item is Spear spear)
+            {
+                P_atk += spear.ATK;
+                P_def += spear.DEF;
+                P_spd += spear.SPD;
+            }
+            else if(item is Axe axe)
+            {
+                P_atk += axe.ATK;
+                P_def += axe.DEF;
+                P_spd += axe.SPD;
             }
             
 
@@ -204,7 +210,7 @@ namespace MiniProject
             {
                 case 1:
                     Console.Clear();
-                    EquipWeapon();
+                    EquipWeapon(player);
                     //DisplayItemDetails(player);
                     break;
                 case 2:
@@ -235,30 +241,6 @@ namespace MiniProject
                     GamePlay.SelectPlay();
                     break;
             }
-        }
-
-        public static void AddSwordStat(Sword sword)
-        {
-            P_atk += 
-            P_def += Sword.AddDef;
-            P_spd += Sword.AddSpd;
-        }
-        public static void AddSpearStat()
-        {
-            P_atk += Spear.AddAtk;
-            P_def += Spear.AddDef;
-            P_spd += Spear.AddSpd;
-        }
-        public static void AddAxeStat()
-        {
-            P_atk += Axe.AddAtk;
-            P_def += Axe.AddDef;
-            P_spd += Axe.AddSpd;
-        }
-
-        public static int AddAtk()
-        {
-            
         }
     }
 }

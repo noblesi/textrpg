@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 
-namespace MiniProject.ItemData
+namespace MiniProject
 {
     public static class Shop
     {
@@ -36,7 +36,7 @@ namespace MiniProject.ItemData
 
             Console.WriteLine("===상점 아이템 목록===");
 
-            foreach(var item in ShopItemList)
+            foreach (var item in ShopItemList)
             {
                 Console.WriteLine($"{item.Value.Id}. {item.Value.Name} || 구매가격 : {item.Value.Value} || {item.Value.Description}");
             }
@@ -48,7 +48,7 @@ namespace MiniProject.ItemData
         {
             Console.Write("어떤 상품을 구매하시겠습니까?(-1 : 취소) ");
             int SelectedItem = int.Parse(Console.ReadLine());
-            if(SelectedItem == -1)
+            if (SelectedItem == -1)
             {
                 return;
             }
@@ -84,7 +84,7 @@ namespace MiniProject.ItemData
 
             Console.WriteLine($"===인벤토리===");
 
-            foreach(var item in Player.Inventory)
+            foreach (var item in Player.Inventory)
             {
                 Console.WriteLine($"{item.Value.Id}. {item.Value.Name} || 판매가격 : {item.Value.Value * 0.8} || 보유개수 : {item.Value.Quantity}");
             }
@@ -111,16 +111,16 @@ namespace MiniProject.ItemData
             Console.Write("몇 개 판매하시겠습니까? ");
             int ItemCnt = int.Parse(Console.ReadLine());
 
-            if(ItemCnt > Player.Inventory[SelectedItem].Quantity)
+            if (ItemCnt > Player.Inventory[SelectedItem].Quantity)
             {
                 Console.WriteLine("\n판매수량이 보유수량보다 많습니다.");
 
                 Thread.Sleep(2000);
             }
-            else if(ItemCnt < Player.Inventory[SelectedItem].Quantity)
+            else if (ItemCnt < Player.Inventory[SelectedItem].Quantity)
             {
                 Console.WriteLine($"\n{Player.Inventory[SelectedItem].Name} {ItemCnt}개 판매하였습니다.");
-                
+
                 Player.Inventory[SelectedItem].Quantity -= ItemCnt;
                 Player.gold += (int)(Player.Inventory[SelectedItem].Value * 0.8) * ItemCnt;
 
@@ -143,7 +143,7 @@ namespace MiniProject.ItemData
             Console.WriteLine("1. 아이템 구매\t2. 아이템 판매\t3. 상점 나가기");
             int ShopSelectIdx = int.Parse(Console.ReadLine());
 
-            switch(ShopSelectIdx)
+            switch (ShopSelectIdx)
             {
                 case 1:
                     BuyItem();

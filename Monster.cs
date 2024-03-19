@@ -64,6 +64,7 @@ namespace MiniProject
             switch(type)
             {
                 case MonsterType.Normal:
+                    name = "초록슬라임";
                     M_hp = 15;
                     M_atk = 3;
                     M_def = -5;
@@ -71,6 +72,7 @@ namespace MiniProject
                     hitrate = 0.3;
                     break;
                 case MonsterType.Elite:
+                    name = "파란슬라임";
                     M_hp = 25;
                     M_atk = 5;
                     M_def = -2;
@@ -78,6 +80,7 @@ namespace MiniProject
                     hitrate = 0.4;
                     break;
                 case MonsterType.Boss:
+                    name = "붉은슬라임";
                     M_hp = 35;
                     M_atk = 8;
                     M_def = 3;
@@ -111,6 +114,7 @@ namespace MiniProject
             switch (type)
             {
                 case MonsterType.Normal:
+                    name = "고블린전사";
                     M_hp = 40;
                     M_atk = 5;
                     M_def = 3;
@@ -118,6 +122,7 @@ namespace MiniProject
                     hitrate = 0.4;
                     break;
                 case MonsterType.Elite:
+                    name = "고블린투척병";
                     M_hp = 60;
                     M_atk = 8;
                     M_def = 5;
@@ -125,6 +130,7 @@ namespace MiniProject
                     hitrate = 0.5;
                     break;
                 case MonsterType.Boss:
+                    name = "고블린족장";
                     M_hp = 90;
                     M_atk = 12;
                     M_def = 7;
@@ -166,6 +172,7 @@ namespace MiniProject
             switch (type)
             {
                 case MonsterType.Normal:
+                    name = "오크전사";
                     M_hp = 100;
                     M_atk = 25;
                     M_def = -10;
@@ -173,6 +180,7 @@ namespace MiniProject
                     hitrate = 0.4;
                     break;
                 case MonsterType.Elite:
+                    name = "오크부족장";
                     M_hp = 150;
                     M_atk = 35;
                     M_def = -3;
@@ -180,6 +188,7 @@ namespace MiniProject
                     hitrate = 0.5;
                     break;
                 case MonsterType.Boss:
+                    name = "오크족장";
                     M_hp = 180;
                     M_atk = 40;
                     M_def = 3;
@@ -221,6 +230,7 @@ namespace MiniProject
             switch (type)
             {
                 case MonsterType.Normal:
+                    name = "타락한보병견습";
                     M_hp = 200;
                     M_atk = 30;
                     M_def = 5;
@@ -228,6 +238,7 @@ namespace MiniProject
                     hitrate = 0.5;
                     break;
                 case MonsterType.Elite:
+                    name = "타락한보병";
                     M_hp = 250;
                     M_atk = 40;
                     M_def = 10;
@@ -235,6 +246,7 @@ namespace MiniProject
                     hitrate = 0.6;
                     break;
                 case MonsterType.Boss:
+                    name = "타락한기사단장";
                     M_hp = 300;
                     M_atk = 55;
                     M_def = 15;

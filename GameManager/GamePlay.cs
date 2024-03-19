@@ -1,9 +1,8 @@
 ﻿using MiniProject.Data;
-using MiniProject.ItemData;
 
 namespace MiniProject.GameManager
 {
-    
+
     public class GamePlay
     {
         public static Player User;
@@ -47,7 +46,7 @@ namespace MiniProject.GameManager
 
         public static void DungeonSelect()
         {
-            Console.Write("어느 던전에 들어가시겠습니까? (-1 : 마을로 돌아가기)");
+            Console.WriteLine("어느 던전에 들어가시겠습니까? (-1 : 마을로 돌아가기)");
 
             Console.WriteLine("1. 늪지대");
             Console.WriteLine("2. 숲");
@@ -64,6 +63,7 @@ namespace MiniProject.GameManager
             switch(DungeonSelectIdx)
             {
                 case -1:
+                    Console.Clear();
                     SelectPlay();
                     break;
                 case 1:

@@ -1,5 +1,4 @@
 ﻿using MiniProject.GameManager;
-using MiniProject.ItemData;
 
 namespace MiniProject
 {
