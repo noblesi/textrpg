@@ -11,10 +11,10 @@ namespace MiniProject
     public class Monster
     {
         public string name { get; protected set; }
-        public int hp { get; protected set; }
-        public int atk { get; protected set; }
-        public int def { get; protected set; }
-        public int spd { get; protected set; }
+        public int M_hp { get; protected set; }
+        public int M_atk { get; protected set; }
+        public int M_def { get; protected set; }
+        public int M_spd { get; protected set; }
         public double hitrate { get; protected set; }
         public MonsterType type { get; protected set; }
 
@@ -23,34 +23,36 @@ namespace MiniProject
             
         }
 
-        public virtual void Attack(Player player)
+        public virtual void Attack()
         {
             int DamageToPlayer;
-            if(player.def >= atk)
+            if(Player.P_def >= M_atk)
             {
                 DamageToPlayer = 0;
+                Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
             else
             {
-                DamageToPlayer = atk - player.def;
+                DamageToPlayer = M_atk - Player.P_def;
+                Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
 
-            player.hp -= DamageToPlayer;
+            Player.P_curhp -= DamageToPlayer;
         }
 
-        public virtual void CriticalAttack(Player player)
+        public virtual void CriticalAttack()
         {
             int DamageToPlayer;
-            if (player.def >= atk)
+            if (Player.P_def >= M_atk)
             {
                 DamageToPlayer = 0;
             }
             else
             {
-                DamageToPlayer = atk - player.def;
+                DamageToPlayer = M_atk - Player.P_def;
             }
 
-            player.hp -= DamageToPlayer * 2;
+            Player.P_curhp -= DamageToPlayer * 2;
 
         }
     }
@@ -62,24 +64,24 @@ namespace MiniProject
             switch(type)
             {
                 case MonsterType.Normal:
-                    hp = 15;
-                    atk = 3;
-                    def = -5;
-                    spd = -10;
+                    M_hp = 15;
+                    M_atk = 3;
+                    M_def = -5;
+                    M_spd = -10;
                     hitrate = 0.3;
                     break;
                 case MonsterType.Elite:
-                    hp = 25;
-                    atk = 5;
-                    def = -2;
-                    spd = -5;
+                    M_hp = 25;
+                    M_atk = 5;
+                    M_def = -2;
+                    M_spd = -5;
                     hitrate = 0.4;
                     break;
                 case MonsterType.Boss:
-                    hp = 35;
-                    atk = 8;
-                    def = 3;
-                    spd = 0;
+                    M_hp = 35;
+                    M_atk = 8;
+                    M_def = 3;
+                    M_spd = 0;
                     hitrate = 0.6;
                     break;
             }
@@ -87,13 +89,13 @@ namespace MiniProject
 
         }
 
-        public override void Attack(Player player)
+        public override void Attack()
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
 
             if (RandomHitRate > hitrate)
             {
-                base.Attack(player);
+                base.Attack();
             }
             else
             {
@@ -109,30 +111,30 @@ namespace MiniProject
             switch (type)
             {
                 case MonsterType.Normal:
-                    hp = 40;
-                    atk = 5;
-                    def = 3;
-                    spd = 3;
+                    M_hp = 40;
+                    M_atk = 5;
+                    M_def = 3;
+                    M_spd = 3;
                     hitrate = 0.4;
                     break;
                 case MonsterType.Elite:
-                    hp = 60;
-                    atk = 8;
-                    def = 5;
-                    spd = 6;
+                    M_hp = 60;
+                    M_atk = 8;
+                    M_def = 5;
+                    M_spd = 6;
                     hitrate = 0.5;
                     break;
                 case MonsterType.Boss:
-                    hp = 90;
-                    atk = 12;
-                    def = 7;
-                    spd = 9;
+                    M_hp = 90;
+                    M_atk = 12;
+                    M_def = 7;
+                    M_spd = 9;
                     hitrate = 0.7;
                     break;
             }
         }
 
-        public override void Attack(Player player)
+        public override void Attack()
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
             double RandomCritRate = Utility.GetRandomDoubleNumber();
@@ -142,11 +144,11 @@ namespace MiniProject
             {
                 if(RandomCritRate <= CritRate)
                 {
-                    base.CriticalAttack(player);
+                    base.CriticalAttack();
                 }
                 else
                 {
-                    base.Attack(player);
+                    base.Attack();
                 }
                 
             }
@@ -164,30 +166,30 @@ namespace MiniProject
             switch (type)
             {
                 case MonsterType.Normal:
-                    hp = 100;
-                    atk = 25;
-                    def = -10;
-                    spd = -5;
+                    M_hp = 100;
+                    M_atk = 25;
+                    M_def = -10;
+                    M_spd = -5;
                     hitrate = 0.4;
                     break;
                 case MonsterType.Elite:
-                    hp = 150;
-                    atk = 35;
-                    def = -3;
-                    spd = 0;
+                    M_hp = 150;
+                    M_atk = 35;
+                    M_def = -3;
+                    M_spd = 0;
                     hitrate = 0.5;
                     break;
                 case MonsterType.Boss:
-                    hp = 180;
-                    atk = 40;
-                    def = 3;
-                    spd = 5;
+                    M_hp = 180;
+                    M_atk = 40;
+                    M_def = 3;
+                    M_spd = 5;
                     hitrate = 0.7;
                     break;
             }
         }
 
-        public override void Attack(Player player)
+        public override void Attack()
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
             double RandomCritRate = Utility.GetRandomDoubleNumber();
@@ -197,11 +199,11 @@ namespace MiniProject
             {
                 if (RandomCritRate <= CritRate)
                 {
-                    base.CriticalAttack(player);
+                    base.CriticalAttack();
                 }
                 else
                 {
-                    base.Attack(player);
+                    base.Attack();
                 }
 
             }
@@ -219,30 +221,30 @@ namespace MiniProject
             switch (type)
             {
                 case MonsterType.Normal:
-                    hp = 200;
-                    atk = 30;
-                    def = 5;
-                    spd = 0;
+                    M_hp = 200;
+                    M_atk = 30;
+                    M_def = 5;
+                    M_spd = 0;
                     hitrate = 0.5;
                     break;
                 case MonsterType.Elite:
-                    hp = 250;
-                    atk = 40;
-                    def = 10;
-                    spd = 5;
+                    M_hp = 250;
+                    M_atk = 40;
+                    M_def = 10;
+                    M_spd = 5;
                     hitrate = 0.6;
                     break;
                 case MonsterType.Boss:
-                    hp = 300;
-                    atk = 55;
-                    def = 15;
-                    spd = 10;
+                    M_hp = 300;
+                    M_atk = 55;
+                    M_def = 15;
+                    M_spd = 10;
                     hitrate = 0.8;
                     break;
             }
         }
 
-        public override void Attack(Player player)
+        public override void Attack()
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
             double RandomCritRate = Utility.GetRandomDoubleNumber();
@@ -252,11 +254,11 @@ namespace MiniProject
             {
                 if (RandomCritRate <= CritRate)
                 {
-                    base.CriticalAttack(player);
+                    base.CriticalAttack();
                 }
                 else
                 {
-                    base.Attack(player);
+                    base.Attack();
                 }
 
             }

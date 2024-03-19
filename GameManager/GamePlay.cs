@@ -47,7 +47,42 @@ namespace MiniProject.GameManager
 
         public static void DungeonSelect()
         {
+            Console.Write("어느 던전에 들어가시겠습니까? (-1 : 마을로 돌아가기)");
 
+            Console.WriteLine("1. 늪지대");
+            Console.WriteLine("2. 숲");
+            Console.WriteLine("3. 동굴");
+            Console.WriteLine("4. 고성");
+
+            SelectDungeonMenu();
+        }
+
+        public static void SelectDungeonMenu()
+        {
+            int DungeonSelectIdx = int.Parse(Console.ReadLine());
+
+            switch(DungeonSelectIdx)
+            {
+                case -1:
+                    SelectPlay();
+                    break;
+                case 1:
+                    Swamp swamp = new Swamp();
+                    swamp.Start(User);
+                    break;
+                case 2:
+                    Forest forest = new Forest();
+                    forest.Start(User);
+                    break;
+                case 3:
+                    Cave cave = new Cave();
+                    cave.Start(User);
+                    break;
+                case 4:
+                    FallenCastle fallenCastle = new FallenCastle();
+                    fallenCastle.Start(User);
+                    break;
+            }
         }
 
         public static void SelectPlayMenu()
@@ -83,7 +118,7 @@ namespace MiniProject.GameManager
             {
                 case 1:
                     Console.WriteLine("기본스탯을 선택하였습니다.");
-                    GameManager.SetFixedStatus(User);
+                    GameManager.SetFixedStatus();
 
                     Thread.Sleep(2000);
                     Console.Clear();
@@ -91,7 +126,7 @@ namespace MiniProject.GameManager
                     break;
                 case 2:
                     Console.WriteLine("랜덤스탯을 선택하였습니다.");
-                    GameManager.SetRandomStatus(User);
+                    GameManager.SetRandomStatus();
 
                     Thread.Sleep(2000);
                     Console.Clear();

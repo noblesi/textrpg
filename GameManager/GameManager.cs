@@ -15,23 +15,27 @@
             return instance;
         }
 
-        public static void SetRandomStatus(Player player)
+        public static void SetRandomStatus()
         {
             Random random = new Random();
 
-            player.hp = random.Next(50, 151);
-            player.atk = random.Next(15, 26);
-            player.def = random.Next(5, 16);
-            player.spd = random.Next(3, 8);
+            Player.P_maxhp = random.Next(50, 151);
+            Player.P_curhp = Player.P_maxhp;
+            Player.P_atk = random.Next(15, 26);
+            Player.P_def = random.Next(5, 16);
+            Player.P_spd = random.Next(3, 8);
         }
 
-        public static void SetFixedStatus(Player player)
+        public static void SetFixedStatus()
         {
-            player.hp = 100;
-            player.atk = 20;
-            player.def = 10;
-            player.spd = 5;
+            Player.P_curhp = 100;
+            Player.P_maxhp = 100;
+            Player.P_atk = 20;
+            Player.P_def = 10;
+            Player.P_spd = 5;
         }
+
+        
     }
 
     
