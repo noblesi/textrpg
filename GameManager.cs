@@ -3,9 +3,9 @@
     public class GameManager
     {
         private static GameManager instance;
-        private GameState currentState;
-        private Player player;
-        private Item item;
+        //private GameState currentState;
+        //private Player player;
+        //private Item item;
 
 
         public static GameManager Instance
@@ -22,15 +22,14 @@
 
         public void StartGame()
         {
-            Title.InitSetting();
-            Title.TitleAlignment();
+            Console.SetCursorPosition(9, 24);
+            Console.WriteLine("[1] 게임시작");
+            Console.SetCursorPosition(42, 24);
+            Console.WriteLine("[2] 불러오기");
+            Console.SetCursorPosition(75, 24); //75
+            Console.WriteLine("[3] 게임종료");
 
-            Utility.WriteCenterPosition("[1] 게임시작");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[2] 불러오기");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[3] 게임종료");
-
+            Console.SetCursorPosition(9, 30);
             int input = int.Parse(Console.ReadLine());
 
             switch (input)
@@ -53,18 +52,12 @@
 
         public void DisplayHome()
         {
-            Utility.WriteCenterPosition("[1] 인벤토리");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[2] 스테이터스");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[3] 상점");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[4] 던전");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[5] 게임저장");
-            Console.WriteLine("\n");
-            Utility.WriteCenterPosition("[6] 게임종료");
+            Console.Clear();
+            UI.DisplayGameUI();
+            Console.SetCursorPosition(3, 24);
+            Console.WriteLine("[1] 인벤토리\t[2] 스테이터스\t[3] 상점\t[4] 던전\t[5] 게임저장\t[6] 게임종료");
 
+            Console.SetCursorPosition(50, 30);
             int input = int.Parse(Console.ReadLine());
             if (input == 1)
             {
@@ -82,7 +75,7 @@
             {
                 Thread.Sleep(300);
                 Console.Clear();
-                Shop.DisplayShopItem();
+                TextRPG.DisplayShopItem();
             }
             else if(input == 4)
             {
@@ -117,9 +110,6 @@
             
         }
 
-        public GameState GetCurrentGameState()
-        {
-            return currentState;
-        }
+        
     }
 }

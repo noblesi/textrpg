@@ -54,5 +54,42 @@ namespace MiniProject
         {
 
         }
+
+        public static void TextAlignment(string text)
+        {
+            int Width = 94;
+
+            int padding = Width - text.Length;
+            int padLeft = padding / 2;
+            int padRight = padding- padLeft;
+
+            string CenterText = text.PadLeft(text.Length + padLeft).PadRight(text.Length + padRight);
+            Console.WriteLine(CenterText);
+        }
+
+        public static int CheckValidInput(int min, int max)
+        {
+            while (true)
+            {
+                string input = Console.ReadLine();
+                try
+                {
+                    bool parseSuccess = int.TryParse(input, out var ret);
+                    if (!parseSuccess)
+                    {
+                        Console.SetCursorPosition(3, 30);
+                        Console.WriteLine("숫자를 입력해주세요:                           ");
+                        Console.SetCursorPosition(24, 30);
+                        continue;
+                    }
+                    return ret;
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    continue;
+                }
+            }
+        }
     }
 }

@@ -8,27 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="GameManager\**" />
     <Compile Remove="Unit\**" />
+    <EmbeddedResource Remove="GameManager\**" />
     <EmbeddedResource Remove="Unit\**" />
+    <None Remove="GameManager\**" />
     <None Remove="Unit\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="GamePlay.cs" />
+    <Compile Remove="GameState.cs" />
     <Compile Remove="Program.cs" />
+    <Compile Remove="Title.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="JsonDataHandler.cs" />
     <None Include="GamePlay.cs" />
+    <None Include="GameState.cs" />
     <None Include="Program.cs" />
+    <None Include="Title.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="GameManager\" />
   </ItemGroup>
 
 </Project>

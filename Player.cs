@@ -55,19 +55,19 @@
             }
         }
 
-        public static void AddItem(Item item, int idx)
-        {
-            int id = item.Id;
-            if (!Inventory.ContainsKey(id))
-            {
-                Inventory.Add(id, item);
-                item.Quantity = idx;
-            }
-            else
-            {
-                Inventory[id].Quantity += idx;
-            }
-        }
+        //public static void AddItem(Item item, int idx)
+        //{
+        //    int id = item.Id;
+        //    if (!Inventory.ContainsKey(id))
+        //    {
+        //        Inventory.Add(id, item);
+        //        item.Quantity = idx;
+        //    }
+        //    else
+        //    {
+        //        Inventory[id].Quantity += idx;
+        //    }
+        //}
 
 
         public void ItemUseInBattle()
