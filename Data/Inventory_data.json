@@ -1,29 +1,59 @@
 {
-  "SWORD": {
-    "Name": "낡은 검",
-    "AddAtk": 10,
-    "AddDef": 0,
-    "AddSpd": 3,
-    "Value": 100,
+  "0": {
+    "Type": [
+      "Sword",
+      "Spear",
+      "Axe",
+      "Healing",
+      "Buff",
+      "Scroll"
+    ],
+    "ATK": 10,
+    "DEF": 0,
+    "SPD": 3,
+    "Name": "고대의 검",
+    "Value": 0,
     "Quantity": 1,
-    "Id": 1
+    "Description": "유저와 함께 성장하는 성장형 검입니다.",
+    "Id": 0,
+    "_type": 0
   },
-  "SPEAR": {
-    "Name": "낡은 창",
-    "AddAtk": 15,
-    "AddDef": 0,
-    "AddSpd": 0,
-    "Value": 100,
+  "1": {
+    "Type": [
+      "Sword",
+      "Spear",
+      "Axe",
+      "Healing",
+      "Buff",
+      "Scroll"
+    ],
+    "ATK": 15,
+    "DEF": 0,
+    "SPD": 0,
+    "Name": "고대의 창",
+    "Value": 0,
     "Quantity": 1,
-    "Id": 2
+    "Description": "유저와 함께 성장하는 성장형 창입니다.",
+    "Id": 1,
+    "_type": 1
   },
-  "AXE": {
-    "Name": "낡은 도끼",
-    "AddAtk": 20,
-    "AddDef": 0,
-    "AddSpd": -3,
-    "Value": 100,
+  "2": {
+    "Type": [
+      "Sword",
+      "Spear",
+      "Axe",
+      "Healing",
+      "Buff",
+      "Scroll"
+    ],
+    "ATK": 20,
+    "DEF": 0,
+    "SPD": -3,
+    "Name": "고대의 도끼",
+    "Value": 0,
     "Quantity": 1,
-    "Id": 3
+    "Description": "유저와 함께 성장하는 성장형 도끼입니다.",
+    "Id": 2,
+    "_type": 2
   }
 }
