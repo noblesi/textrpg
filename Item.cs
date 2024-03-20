@@ -14,14 +14,10 @@ namespace MiniProject
     public class Item
     {
         public string Name { get; set; }
-        //public static int AddAtk { get; set; }
-        //public static int AddDef { get; set; }
-        //public static int AddSpd { get; set; }
         public int Value { get; set; }
         public int Quantity { get; set; }
         public string Description { get; set; }
-        public int Id { get; set; }
-        public bool isEquipped { get; set; }
+        public int Id { get; set; }        
         public int _type { get; set; }
         //protected static int exp {  get; set; }
         //protected static int maxExp {  get; set; }
@@ -61,7 +57,6 @@ namespace MiniProject
             ATK = atk;
             DEF = def;
             SPD = spd;
-            isEquipped = false;
             exp = 0;
             Quantity = 1;
         }
@@ -142,7 +137,6 @@ namespace MiniProject
             ATK = atk;
             DEF = def;
             SPD = spd;
-            isEquipped = false;
             exp = 0;
             Quantity = 1;
         }
@@ -222,7 +216,6 @@ namespace MiniProject
             ATK = atk;
             DEF = def;
             SPD = spd;
-            isEquipped = false;
             exp = 0;
             Quantity = 1;
         }
@@ -318,16 +311,16 @@ namespace MiniProject
         public static void Buff(int idx)
         {
             Item buffpotion = Player.Inventory[idx];
-            int CurAtk = Player.P_curatk;
+            int CurAtk = Player.P_totalatk;
             Player.isBuffed = true;
 
             switch (buffpotion.Id)
             {
                 case 6:
-                    Player.P_atk = CurAtk + 10;
+                    Player.P_baseatk = CurAtk + 10;
                     break;
                 case 7:
-                    Player.P_atk = CurAtk + 15;
+                    Player.P_baseatk = CurAtk + 15;
                     break;
             }
         }

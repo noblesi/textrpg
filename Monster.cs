@@ -11,7 +11,7 @@ namespace MiniProject
     public class Monster
     {
         public string name { get; protected set; }
-        public int M_hp { get; protected set; }
+        public int M_hp { get; set; }
         public int M_atk { get; protected set; }
         public int M_def { get; protected set; }
         public int M_spd { get; protected set; }
@@ -26,14 +26,14 @@ namespace MiniProject
         public virtual void Attack()
         {
             int DamageToPlayer;
-            if(Player.P_def >= M_atk)
+            if(Player.P_totaldef >= M_atk)
             {
                 DamageToPlayer = 0;
                 Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
             else
             {
-                DamageToPlayer = M_atk - Player.P_def;
+                DamageToPlayer = M_atk - Player.P_totaldef;
                 Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
 
@@ -43,13 +43,13 @@ namespace MiniProject
         public virtual void CriticalAttack()
         {
             int DamageToPlayer;
-            if (Player.P_def >= M_atk)
+            if (Player.P_totaldef >= M_atk)
             {
                 DamageToPlayer = 0;
             }
             else
             {
-                DamageToPlayer = M_atk - Player.P_def;
+                DamageToPlayer = M_atk - Player.P_totaldef;
             }
 
             Player.P_curhp -= DamageToPlayer * 2;
@@ -88,8 +88,6 @@ namespace MiniProject
                     hitrate = 0.6;
                     break;
             }
-
-
         }
 
         public override void Attack()
