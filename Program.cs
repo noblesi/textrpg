@@ -7,13 +7,8 @@ namespace MiniProject
     {
         static void Main(string[] args)
         {
-            JsonDataHandler.SavePlayerData(GamePlay.User, JsonDataHandler.GetPlayerDataPath());
-
-            JsonDataHandler.LoadPlayerData(JsonDataHandler.GetPlayerDataPath());
-            
-
             #region
-            /*Title.InitSetting();
+            Title.InitSetting();
 
             Title.TitleAlignment();
 
@@ -34,15 +29,15 @@ namespace MiniProject
                     break;
                 case 2:
                     Console.WriteLine("저장된 게임을 불러옵니다.");
-                    //Console.Clear();
-                    //JsonDataHandler.LoadPlayerData(JsonDataHandler.GetPlayerDataPath());
-                    //JsonDataHandler.LoadInventoryData(JsonDataHandler.GetInventoryDataPath());
-                    //GamePlay.SelectPlay();
+                    Console.Clear();
+                    JsonDataHandler.LoadPlayerData(JsonDataHandler.GetPlayerDataPath());
+                    JsonDataHandler.LoadInventoryData(JsonDataHandler.GetInventoryDataPath());
+                    GamePlay.SelectPlay();
                     break;
                 case 3:
                     Console.WriteLine("게임을 종료합니다.");
                     break;
-            }*/
+            }
             #endregion
         }
     }

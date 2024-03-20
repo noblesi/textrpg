@@ -1,5 +1,4 @@
-﻿using MiniProject.GameManager;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -8,7 +7,7 @@ namespace MiniProject.Data
 {
     public class JsonDataHandler
     {
-        const string filepath = "C:\\Users\\KGA\\Desktop\\MiniProject\\Data\\";
+        const string filepath = "C:\\Users\\KGA\\Desktop\\";
         const string InventoryData = "Inventory_data.json";
         const string PlayerData = "Player_data.json";
 
@@ -17,7 +16,7 @@ namespace MiniProject.Data
             try
             {
                 string json = JsonConvert.SerializeObject(player, Formatting.Indented);
-                File.WriteAllText(filepath, json);
+                File.WriteAllText(filePath, json);
                 Console.WriteLine($"PlayerData saved to {PlayerData}");
             }
             catch(Exception ex )

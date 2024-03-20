@@ -14,7 +14,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="GamePlay.cs" />
+    <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="GamePlay.cs" />
+    <None Include="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GameManager\" />
   </ItemGroup>
 
 </Project>

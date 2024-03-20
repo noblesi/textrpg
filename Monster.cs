@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace MiniProject
+﻿namespace MiniProject
 {
     public enum MonsterType
     {
@@ -26,33 +24,33 @@ namespace MiniProject
         public virtual void Attack()
         {
             int DamageToPlayer;
-            if(Player.P_totaldef >= M_atk)
+            if(TextRPG.player.Def >= M_atk)
             {
                 DamageToPlayer = 0;
                 Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
             else
             {
-                DamageToPlayer = M_atk - Player.P_totaldef;
+                DamageToPlayer = M_atk - TextRPG.player.Def;
                 Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
 
-            Player.P_curhp -= DamageToPlayer;
+            TextRPG.player.CurrentHp -= DamageToPlayer;
         }
 
         public virtual void CriticalAttack()
         {
             int DamageToPlayer;
-            if (Player.P_totaldef >= M_atk)
+            if (TextRPG.player.Def >= M_atk)
             {
                 DamageToPlayer = 0;
             }
             else
             {
-                DamageToPlayer = M_atk - Player.P_totaldef;
+                DamageToPlayer = M_atk - TextRPG.player.Def;
             }
 
-            Player.P_curhp -= DamageToPlayer * 2;
+            TextRPG.player.CurrentHp -= DamageToPlayer * 2;
 
         }
     }

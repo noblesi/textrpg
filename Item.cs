@@ -1,5 +1,4 @@
-﻿using MiniProject.GameManager;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -22,7 +21,7 @@ namespace MiniProject
         //protected static int exp {  get; set; }
         //protected static int maxExp {  get; set; }
 
-        public List<string> Type = new List<string> { "Sword", "Spear", "Axe", "Healing", "Buff", "Scroll" };
+        public List<string> Type = new List<string> { "Sword", "Spear", "Axe", "Healing", "Scroll" };
 
         public Item(string name, int value, string description, int type, int id)
         {
@@ -297,13 +296,13 @@ namespace MiniProject
             switch (healingpotion.Id)
             {
                 case 3:
-                    Player.P_curhp = Math.Min(Player.P_curhp + 20, Player.P_maxhp);
+                    TextRPG.player.CurrentHp = Math.Min(TextRPG.player.CurrentHp + 20, TextRPG.player.Hp);
                     break;
                 case 4:
-                    Player.P_curhp = Math.Min(Player.P_curhp + 40, Player.P_maxhp);
+                    TextRPG.player.CurrentHp = Math.Min(TextRPG.player.CurrentHp + 40, TextRPG.player.Hp);
                     break;
                 case 5:
-                    Player.P_curhp = Math.Min(Player.P_curhp + 80, Player.P_maxhp);
+                    TextRPG.player.CurrentHp = Math.Min(TextRPG.player.CurrentHp + 80, TextRPG.player.Hp);
                     break;
             }
         }
@@ -311,16 +310,16 @@ namespace MiniProject
         public static void Buff(int idx)
         {
             Item buffpotion = Player.Inventory[idx];
-            int CurAtk = Player.P_totalatk;
+            int CurAtk = TextRPG.player.Atk;
             Player.isBuffed = true;
 
             switch (buffpotion.Id)
             {
                 case 6:
-                    Player.P_baseatk = CurAtk + 10;
+                    TextRPG.player.Atk = CurAtk + 10;
                     break;
                 case 7:
-                    Player.P_baseatk = CurAtk + 15;
+                    TextRPG.player.Atk = CurAtk + 15;
                     break;
             }
         }
@@ -337,7 +336,7 @@ namespace MiniProject
         {
             Console.WriteLine("강제로 전투에서 탈출하여 마을로 돌아갑니다.");
 
-            GamePlay.SelectPlay();
+            GameManager.Instance.DisplayHome();
         }
     }
 }

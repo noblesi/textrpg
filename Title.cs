@@ -1,6 +1,6 @@
-﻿namespace MiniProject.GameManager
+﻿namespace MiniProject
 {
-    
+
 
     public class Title
     {
@@ -24,7 +24,7 @@ _|_|_|_|_|  _|_|_|_|  _|      _|  _|_|_|_|_|      _|_|_|    _|_|_|      _|_|_|
             }
         }
 
-        
+
 
         public static void InitSetting()
         {

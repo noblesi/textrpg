@@ -1,12 +1,10 @@
 ﻿using MiniProject.Data;
 
-namespace MiniProject.GameManager
+namespace MiniProject
 {
 
     public class GamePlay
     {
-
-
         public static Player User;
         public static void StartGame()
         {
@@ -27,7 +25,7 @@ namespace MiniProject.GameManager
             Thread.Sleep(1000);
 
             Console.Clear();
-            
+
             Console.WriteLine("스탯의 유형을 지정하세요.");
             Console.WriteLine("=================");
             Console.WriteLine("1. 기본스탯\n\n");
@@ -44,8 +42,8 @@ namespace MiniProject.GameManager
             Console.WriteLine("1. 던전 입장\n");
             Console.WriteLine("2. 인벤토리 열기\n");
             Console.WriteLine("3. 스테이터스 확인\n");
-            Console.WriteLine("4. 상점 입장");
-            //Console.WriteLine("5. 저장하기");
+            Console.WriteLine("4. 상점 입장\n");
+            Console.WriteLine("5. 저장하기");
             Console.WriteLine("=================");
 
             SelectPlayMenu();
@@ -69,7 +67,7 @@ namespace MiniProject.GameManager
         {
             int DungeonSelectIdx = int.Parse(Console.ReadLine());
 
-            switch(DungeonSelectIdx)
+            switch (DungeonSelectIdx)
             {
                 case -1:
                     Console.Clear();
@@ -120,11 +118,15 @@ namespace MiniProject.GameManager
                     Console.Clear();
                     Shop.DisplayShopItem();
                     break;
-                //case 5:
-                //    Console.Clear();
-                //    JsonDataHandler.SavePlayerData(User, JsonDataHandler.GetPlayerDataPath());
-                //    JsonDataHandler.SaveInventoryData(Player.Inventory, JsonDataHandler.GetInventoryDataPath());
-                //    break;
+                case 5:
+                    Console.Clear();
+                    JsonDataHandler.SavePlayerData(User, JsonDataHandler.GetPlayerDataPath());
+                    JsonDataHandler.SaveInventoryData(Player.Inventory, JsonDataHandler.GetInventoryDataPath());
+
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    SelectPlay();
+                    break;
             }
         }
 
