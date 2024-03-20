@@ -7,15 +7,17 @@ namespace MiniProject
     public class Player
     {
         public string name { get; set; }
-        public static int P_maxhp { get; set; }
+        public static int P_maxhp { get; private set; }
         public static int P_curhp {  get; set; }
-        public static int P_atk { get; set; }
-        public static int P_curatk {  get; set; }
-        public static int P_def { get; set; }
-        public static int P_spd { get; set; }
+        public static int P_totalatk { get; private set; }
+        public static int P_baseatk {  get; set; }
+        public static int P_totaldef {  get; private set; }
+        public static int P_basedef { get; set; }
+        public static int P_totalspd {  get; private set; }
+        public static int P_basespd { get; set; }
         public static bool isBuffed { get; set; }
         public static int gold {  get; set; }
-        //public Item EquippedItem { get; set; }
+        public static Item EquippedItem { get; set; }
         public static Dictionary<int, Item> Inventory { get; set; } // 
         
         public Player(string name)
@@ -34,18 +36,45 @@ namespace MiniProject
             gold = 1000;
         }
 
+        public static void SetRandomStatus()
+        {
+            Random random = new Random();
+
+            P_maxhp = random.Next(50, 151);
+            P_curhp = P_maxhp;
+            P_baseatk = random.Next(15, 26);
+            P_totalatk = P_baseatk;
+            P_basedef = random.Next(5, 16);
+            P_totaldef = P_basedef;
+            P_basespd = random.Next(3, 8);
+            P_totalspd = P_basespd;
+        }
+
+        public static void SetFixedStatus()
+        {
+            P_curhp = 100;
+            P_maxhp = P_curhp;
+            P_baseatk = 20;
+            P_totalatk = P_baseatk;
+            P_basedef = 10;
+            P_totaldef = P_basedef;
+            P_basespd = 5;
+            P_totalspd = P_basespd;
+        }
+
         public void Attack(Monster monster)
         {
             int DamageToMonster;
 
-            if(monster.M_def >= Player.P_atk)
+            if(monster.M_def >= P_totalatk)
             {
                 DamageToMonster = 0;
                 Console.WriteLine($"데미지를 {DamageToMonster}만큼 입혔습니다.");
             }
             else
             {
-                DamageToMonster = Player.P_atk - monster.M_def;
+                DamageToMonster = P_baseatk - monster.M_def;
+                monster.M_hp -= DamageToMonster;
                 Console.WriteLine($"데미지를 {DamageToMonster}만큼 입혔습니다.");
             }
         }
@@ -64,41 +93,25 @@ namespace MiniProject
             }
         }
 
-        //public static void DisplayItemDetails(Player player)
-        //{
-        //    foreach (var item in Inventory)
-        //    {
-        //        Console.WriteLine($"{item.Value.Id}. {item.Value.Name}");
-        //    }
-        //    Console.WriteLine("아이템을 선택하세요.");
-        //    int SelectIdx = int.Parse(Console.ReadLine());
-        //    Item SelectedItem = Inventory[SelectIdx-1];
-
-        //    Console.WriteLine($"{SelectedItem.Name}의 상세정보");
-        //    Console.WriteLine($"공격력 증가량 : {SelectedItem.AddAtk}");
-        //    Console.WriteLine($"방어력 증가량 : {SelectedItem.AddDef}");
-        //    Console.WriteLine($"속도 증가량 : {SelectedItem.AddSpd}");
-
-        //    Console.ReadLine();
-        //    Console.Clear();
-        //    DisplayUserInventory(player);
-        //}
-
         public void GetStatus()
         {
-            P_maxhp = 100;
-            P_atk = 20;
-            P_def = 10;
-            P_spd = 5;
+            P_curhp = 100;
+            P_maxhp = P_curhp;
+            P_baseatk = 20;
+            P_totalatk = P_baseatk;
+            P_basedef = 10;
+            P_totaldef = P_basedef;
+            P_basespd = 5;
+            P_totalspd = P_basespd;
         }
 
         public static void DisplayUserStatus(Player player)
         {
             Console.WriteLine($"==={player.name}의 스탯===");
             Console.WriteLine($"HP : {P_curhp}/{P_maxhp}");
-            Console.WriteLine($"ATK : {P_atk}");
-            Console.WriteLine($"DEf : {P_def}");
-            Console.WriteLine($"SPD : {P_spd}");
+            Console.WriteLine($"ATK : {P_totalatk}");
+            Console.WriteLine($"DEf : {P_totaldef}");
+            Console.WriteLine($"SPD : {P_totalspd}");
 
             Thread.Sleep(1000);
 
@@ -110,6 +123,8 @@ namespace MiniProject
             Console.WriteLine($"==={player.name}의 인벤토리===");
 
             Console.WriteLine($"현재 소지금 : {gold}");
+
+            Console.WriteLine("===================");
 
             foreach(var item in Inventory)
             {
@@ -128,29 +143,48 @@ namespace MiniProject
             Console.WriteLine("장착할 무기를 선택하세요.(0 : 고대의 검 1 : 고대의 창 2. 고대의 도끼)");
             int SelectedWeapon = int.Parse(Console.ReadLine());
 
-            Inventory[SelectedWeapon].isEquipped = true;
-
-            Console.WriteLine($"{Inventory[SelectedWeapon].Name} 장착성공!");
-
-            Item item = Inventory[SelectedWeapon];
-
-            if(item is Sword sword)
+            if (EquippedItem != null)
             {
-                P_atk += sword.ATK;
-                P_def += sword.DEF;
-                P_spd += sword.SPD;
+                Console.WriteLine($"{Inventory[SelectedWeapon].Name} 장착실패");
+                Console.WriteLine("이미 무기를 장착하고있습니다.");
+                Console.WriteLine("무기를 교체하시겠습니까?");
+                Console.WriteLine("1. 예 / 2. 아니오");
+                int choice = int.Parse(Console.ReadLine());
+                if(choice == 1)
+                {
+                    Console.WriteLine("무기를 교체합니다.");
+                    EquippedItem = Inventory[SelectedWeapon];
+                }
+                else
+                {
+                    Console.WriteLine("무기 교체를 취소합니다.");
+                    return;
+                }
             }
-            else if(item is Spear spear)
+            else
             {
-                P_atk += spear.ATK;
-                P_def += spear.DEF;
-                P_spd += spear.SPD;
+                Console.WriteLine($"{Inventory[SelectedWeapon].Name} 장착성공!");
             }
-            else if(item is Axe axe)
+
+            EquippedItem = Inventory[SelectedWeapon];
+
+            if(EquippedItem is Sword sword)
             {
-                P_atk += axe.ATK;
-                P_def += axe.DEF;
-                P_spd += axe.SPD;
+                P_totalatk = P_baseatk + sword.ATK;
+                P_totaldef = P_basedef + sword.DEF;
+                P_totalspd = P_basedef + sword.SPD;
+            }
+            else if(EquippedItem is Spear spear)
+            {
+                P_totalatk = P_baseatk + spear.ATK;
+                P_totaldef = P_basedef + spear.DEF;
+                P_totalspd = P_basespd + spear.SPD;
+            }
+            else if(EquippedItem is Axe axe)
+            {
+                P_totalatk = P_baseatk + axe.ATK;
+                P_totaldef = P_basedef + axe.DEF;
+                P_totalspd = P_basespd + axe.SPD;
             }
             
 

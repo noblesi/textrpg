@@ -26,12 +26,12 @@
 
         public virtual void Start(Player player)
         {
+            Console.WriteLine("=================");
             Console.WriteLine("던전에 진입하였습니다.");
+            Console.WriteLine("=================");
 
-            foreach(var monster in monsters)
+            foreach (var monster in monsters)
             {
-                Console.WriteLine($"{monster.name}을(를) 조우했습니다.");
-
                 Battle.Start(player, monster);
             }
         }

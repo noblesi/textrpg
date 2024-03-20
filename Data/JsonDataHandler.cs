@@ -9,32 +9,72 @@ namespace MiniProject.Data
     public class JsonDataHandler
     {
         const string filepath = "C:\\Users\\KGA\\Desktop\\MiniProject\\Data\\";
-        const string filename = "Inventory_data.json";
+        const string InventoryData = "Inventory_data.json";
+        const string PlayerData = "Player_data.json";
 
-        public static void SaveInventoryData(Dictionary<string, Item> inventory, string filePath)
+        public static void SavePlayerData(Player player, string filePath)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(inventory, Formatting.Indented); ;
-                File.WriteAllText(filePath, json);
-                Console.WriteLine($"Inventory saved to {filename}");
+                string json = JsonConvert.SerializeObject(player, Formatting.Indented);
+                File.WriteAllText(filepath, json);
+                Console.WriteLine($"PlayerData saved to {PlayerData}");
             }
-            catch(Exception ex)
+            catch(Exception ex )
             {
                 Console.WriteLine($"Error saving player data : {ex.Message}");
             }
         }
 
-        public static Dictionary<string, Item> LoadInventoryData(string filePath)
+        public static Player LoadPlayerData(string filePath)
         {
+            Player player = null;
             try
             {
-                Dictionary<string, Item> inventory = new Dictionary<string, Item>();
                 if (File.Exists(filePath))
                 {
                     string json = File.ReadAllText(filePath);
-                    inventory = JsonConvert.DeserializeObject<Dictionary<string, Item>>(json);
-                    Console.WriteLine($"Inventory loaded from {filename}");
+                    player = JsonConvert.DeserializeObject<Player>(json);
+                    Console.WriteLine($"Player loaded from {PlayerData}");
+                }
+                else
+                {
+                    Console.WriteLine("File not found.");
+                }
+                return player;
+            }
+            catch( Exception ex )
+            {
+                Console.WriteLine($"Error loading player data : {ex.Message}");
+                return null;
+            }
+            
+        }
+
+        public static void SaveInventoryData(Dictionary<int, Item> inventory, string filePath)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(inventory, Formatting.Indented);
+                File.WriteAllText(filePath, json);
+                Console.WriteLine($"Inventory saved to {InventoryData}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error saving inventory data : {ex.Message}");
+            }
+        }
+
+        public static Dictionary<int, Item> LoadInventoryData(string filePath)
+        {
+            try
+            {
+                Dictionary<int, Item> inventory = new Dictionary<int, Item>();
+                if (File.Exists(filePath))
+                {
+                    string json = File.ReadAllText(filePath);
+                    inventory = JsonConvert.DeserializeObject<Dictionary<int, Item>>(json);
+                    Console.WriteLine($"Inventory loaded from {InventoryData}");
                 }
                 else
                 {
@@ -44,14 +84,19 @@ namespace MiniProject.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading player data : {ex.Message}");
+                Console.WriteLine($"Error loading inventory data : {ex.Message}");
                 return null;
             }
         }
 
-        public static string GetFilePath()
+        public static string GetPlayerDataPath()
         {
-            return filepath+filename;
+            return filepath + PlayerData;
+        }
+
+        public static string GetInventoryDataPath()
+        {
+            return filepath + InventoryData;
         }
     }
 }

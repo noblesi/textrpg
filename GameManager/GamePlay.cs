@@ -5,6 +5,8 @@ namespace MiniProject.GameManager
 
     public class GamePlay
     {
+
+
         public static Player User;
         public static void StartGame()
         {
@@ -25,10 +27,12 @@ namespace MiniProject.GameManager
             Thread.Sleep(1000);
 
             Console.Clear();
-
+            
             Console.WriteLine("스탯의 유형을 지정하세요.");
-            Console.WriteLine("1. 기본스탯\n\n2. 랜덤스탯");
-
+            Console.WriteLine("=================");
+            Console.WriteLine("1. 기본스탯\n\n");
+            Console.WriteLine("2. 랜덤스탯");
+            Console.WriteLine("=================");
             SelectStatusMenu();
         }
 
@@ -36,10 +40,13 @@ namespace MiniProject.GameManager
         {
             Console.WriteLine("다음 행동을 선택하세요.");
 
-            Console.WriteLine("1. 던전 입장");
-            Console.WriteLine("2. 인벤토리 열기");
-            Console.WriteLine("3. 스테이터스 확인");
+            Console.WriteLine("=================");
+            Console.WriteLine("1. 던전 입장\n");
+            Console.WriteLine("2. 인벤토리 열기\n");
+            Console.WriteLine("3. 스테이터스 확인\n");
             Console.WriteLine("4. 상점 입장");
+            //Console.WriteLine("5. 저장하기");
+            Console.WriteLine("=================");
 
             SelectPlayMenu();
         }
@@ -48,10 +55,12 @@ namespace MiniProject.GameManager
         {
             Console.WriteLine("어느 던전에 들어가시겠습니까? (-1 : 마을로 돌아가기)");
 
-            Console.WriteLine("1. 늪지대");
-            Console.WriteLine("2. 숲");
-            Console.WriteLine("3. 동굴");
+            Console.WriteLine("=================");
+            Console.WriteLine("1. 늪지대\n");
+            Console.WriteLine("2. 숲\n");
+            Console.WriteLine("3. 동굴\n");
             Console.WriteLine("4. 고성");
+            Console.WriteLine("=================");
 
             SelectDungeonMenu();
         }
@@ -67,18 +76,22 @@ namespace MiniProject.GameManager
                     SelectPlay();
                     break;
                 case 1:
+                    Console.Clear();
                     Swamp swamp = new Swamp();
                     swamp.Start(User);
                     break;
                 case 2:
+                    Console.Clear();
                     Forest forest = new Forest();
                     forest.Start(User);
                     break;
                 case 3:
+                    Console.Clear();
                     Cave cave = new Cave();
                     cave.Start(User);
                     break;
                 case 4:
+                    Console.Clear();
                     FallenCastle fallenCastle = new FallenCastle();
                     fallenCastle.Start(User);
                     break;
@@ -107,6 +120,11 @@ namespace MiniProject.GameManager
                     Console.Clear();
                     Shop.DisplayShopItem();
                     break;
+                //case 5:
+                //    Console.Clear();
+                //    JsonDataHandler.SavePlayerData(User, JsonDataHandler.GetPlayerDataPath());
+                //    JsonDataHandler.SaveInventoryData(Player.Inventory, JsonDataHandler.GetInventoryDataPath());
+                //    break;
             }
         }
 
@@ -118,17 +136,17 @@ namespace MiniProject.GameManager
             {
                 case 1:
                     Console.WriteLine("기본스탯을 선택하였습니다.");
-                    GameManager.SetFixedStatus();
+                    Player.SetFixedStatus();
 
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     Console.Clear();
                     SelectPlay();
                     break;
                 case 2:
                     Console.WriteLine("랜덤스탯을 선택하였습니다.");
-                    GameManager.SetRandomStatus();
+                    Player.SetRandomStatus();
 
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     Console.Clear();
                     SelectPlay();
                     break;
