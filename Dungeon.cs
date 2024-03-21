@@ -26,9 +26,8 @@
 
         public virtual void Start(Player player)
         {
-            Console.WriteLine("=================");
-            Console.WriteLine("던전에 진입하였습니다.");
-            Console.WriteLine("=================");
+            Console.Clear();
+            UI.DisplayGameUI();
 
             foreach (var monster in monsters)
             {

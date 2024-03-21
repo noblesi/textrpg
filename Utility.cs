@@ -30,17 +30,28 @@ namespace MiniProject
 
         public static void LoadGameData()
         {
-            string fileName = "PlayerData.json";
-            string userDocumentFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); 
-            string filePath = Path.Combine(userDocumentFolder, fileName);
+            string playerfileName = "PlayerData.json";
+            string inventoryfileName = "InvenData.json";
 
-            if(File.Exists(filePath))
+            string userDocumentFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            string playerfilePath = Path.Combine(userDocumentFolder, playerfileName);
+            string inventoryfilePath = Path.Combine(userDocumentFolder, inventoryfileName);
+
+            if (File.Exists(playerfilePath) && File.Exists(inventoryfilePath))
             {
                 TextRPG.isCreate = true;
-                string playerJson = File.ReadAllText(filePath);
+
+                string playerJson = File.ReadAllText(playerfilePath);
+                string inventoryJson = File.ReadAllText(inventoryfilePath);
+
                 playerJson = Regex.Unescape(playerJson);
+                inventoryJson = Regex.Unescape(inventoryJson);
+
                 Player loadedPlayer = JsonSerializer.Deserialize<Player>(playerJson);
+                Dictionary<int, Item> loadedInventory = JsonSerializer.Deserialize<Dictionary<int, Item>>(inventoryJson);
                 TextRPG.player = loadedPlayer;
+                TextRPG.Inventory = loadedInventory;
             }
             else
             {
@@ -52,8 +63,25 @@ namespace MiniProject
 
         public static void SaveGameData()
         {
+            string playerfileName = "PlayerData.json";
+            string inventoryfileName = "InvenData.json";
 
-        }
+            string userDocumentFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            string playerfilePath = Path.Combine(userDocumentFolder, playerfileName);
+            string inventoryfilePath = Path.Combine(userDocumentFolder, inventoryfileName);
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+
+            string playersData = JsonSerializer.Serialize(TextRPG.player, options);
+            string invenData = JsonSerializer.Serialize(TextRPG.Inventory, options);
+
+            playersData = Regex.Unescape(playersData);
+            invenData = Regex.Unescape(invenData);
+
+            File.WriteAllText(playerfilePath, playersData);
+            File.WriteAllText(inventoryfilePath, invenData);
+        }   
 
         public static void TextAlignment(string text)
         {
@@ -65,31 +93,6 @@ namespace MiniProject
 
             string CenterText = text.PadLeft(text.Length + padLeft).PadRight(text.Length + padRight);
             Console.WriteLine(CenterText);
-        }
-
-        public static int CheckValidInput(int min, int max)
-        {
-            while (true)
-            {
-                string input = Console.ReadLine();
-                try
-                {
-                    bool parseSuccess = int.TryParse(input, out var ret);
-                    if (!parseSuccess)
-                    {
-                        Console.SetCursorPosition(3, 30);
-                        Console.WriteLine("숫자를 입력해주세요:                           ");
-                        Console.SetCursorPosition(24, 30);
-                        continue;
-                    }
-                    return ret;
-                }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
-                }
-            }
         }
     }
 }

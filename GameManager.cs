@@ -22,6 +22,9 @@
 
         public void StartGame()
         {
+            UI.DisplayGameUI();
+            UI.DisplayGameTitle();
+
             Console.SetCursorPosition(9, 24);
             Console.WriteLine("[1] 게임시작");
             Console.SetCursorPosition(42, 24);
@@ -44,6 +47,7 @@
                     Console.Clear();
                     Thread.Sleep(500);
                     Utility.LoadGameData();
+                    DisplayHome();
                     break;
                 case 3:
                     break;
@@ -79,14 +83,14 @@
             }
             else if(input == 4)
             {
-                Utility.WriteCenterPosition("던전 입구");
                 Thread.Sleep(300);
-                //TextRPG.EnterDungeon();
+                TextRPG.EnterDungeon();
             }
             else if (input == 5)
             {
                 Thread.Sleep(300);
                 Utility.SaveGameData();
+                DisplayHome();
             }
             else if(input == 6)
             {

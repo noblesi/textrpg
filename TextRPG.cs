@@ -8,7 +8,6 @@ namespace MiniProject
 {
     internal class TextRPG
     {
-        GameManager gameManager = GameManager.Instance;
         public static Player player;
         public static Monster monster;
         public static Item item;
@@ -28,11 +27,10 @@ namespace MiniProject
         static string getName = "";
         public static bool isCreate = false;
 
+        
+
         public static void Main(string[] args)
         {
-            UI.DisplayGameUI();
-            UI.DisplayGameTitle();
-
             GameManager.Instance.StartGame();
         }
 
@@ -151,7 +149,7 @@ namespace MiniProject
             foreach (var item in Inventory)
             {
                 Console.SetCursorPosition(3, idx);
-                Console.WriteLine($"{item.Value.Name}");
+                Console.WriteLine($"{item.Value.Name} ({item.Value.Quantity})");
                 Console.SetCursorPosition(3, idx + 1);
                 Console.WriteLine($"{item.Value.Description}");
                 Console.SetCursorPosition(3, idx + 2);
@@ -182,9 +180,9 @@ namespace MiniProject
         {
             Inventory = new Dictionary<int, Item>();
 
-            Item AncientSword = new Sword("고대의 검", 0, 0, "유저와 함께 성장하는 성장형 검입니다.", 10, 0, 3);
-            Item AncientSpear = new Spear("고대의 창", 1, 1, "유저와 함께 성장하는 성장형 창입니다.", 15, 0, 0);
-            Item AncientAxe = new Axe("고대의 도끼", 2, 2, "유저와 함께 성장하는 성장형 도끼입니다.", 20, 0, -3);
+            Item AncientSword = new Sword("고대의 검", 0, 0, "유저와 함께 성장하는 성장형 검입니다.", 10, 0, 3, false);
+            Item AncientSpear = new Spear("고대의 창", 1, 1, "유저와 함께 성장하는 성장형 창입니다.", 15, 0, 0, false);
+            Item AncientAxe = new Axe("고대의 도끼", 2, 2, "유저와 함께 성장하는 성장형 도끼입니다.", 20, 0, -3, false);
 
             Inventory.Add(0, AncientSword);
             Inventory.Add(1, AncientSpear);
@@ -229,8 +227,7 @@ namespace MiniProject
                     Console.SetCursorPosition(50, 10);
                     Console.WriteLine($"{Inventory[SelectedWeapon - 1].Name} 교체 성공");
                     EquippedItem = Inventory[SelectedWeapon - 1];
-
-
+                    
                 }
                 else
                 {
@@ -249,20 +246,25 @@ namespace MiniProject
 
             EquippedItem = Inventory[SelectedWeapon - 1];
 
+            
+
             if (EquippedItem is Sword sword)
             {
+                sword.isEquipped = true;
                 player.Atk += sword.ATK;
                 player.Def += sword.DEF;
                 player.Spd += sword.SPD;
             }
             else if (EquippedItem is Spear spear)
             {
+                spear.isEquipped = true;
                 player.Atk += spear.ATK;
                 player.Def += spear.DEF;
                 player.Spd += spear.SPD;
             }
             else if (EquippedItem is Axe axe)
             {
+                axe.isEquipped = true;
                 player.Atk += axe.ATK;
                 player.Def += axe.DEF;
                 player.Spd += axe.SPD;
@@ -275,84 +277,15 @@ namespace MiniProject
             GameManager.Instance.DisplayHome();
         }
 
-        public static void AddItem(Item item, int quantity)
+        public static void InitializeShop()
         {
-            int id = item.Id;
-            if (!Inventory.ContainsKey(id))
+            ShopItemList = new List<Item>
             {
-                Inventory.Add(id, item);
-                item.Quantity = quantity;
-            }
-            else
-            {
-                Inventory[id].Quantity += quantity;
-            }
-        }
-
-        public static void BuyItem()
-        {
-            UI.DisplayGameUI();
-
-            Console.SetCursorPosition(1, 1);
-            Console.WriteLine("   상점 아이템 목록   ");
-            Console.SetCursorPosition(3, 2);
-            Console.WriteLine($"현재 소지금 : {TextRPG.player.Gold}");
-
-            int idx = 5;
-            foreach (var item in ShopItemList)
-            {
-                Console.SetCursorPosition(3, idx);
-                Console.WriteLine($"{item.Id} .  {item.Name}");
-                Console.SetCursorPosition(3, idx + 1);
-                Console.WriteLine($"구매가격 : {item.Value}");
-                Console.SetCursorPosition(3, idx + 2);
-                Console.WriteLine($"설명 : {item.Description}");
-                Console.SetCursorPosition(3, idx + 3);
-                Console.WriteLine("---------------------");
-                idx += 4;
-            }
-
-            Console.SetCursorPosition(50, 5);
-            Console.Write("어떤 상품을 구매하시겠습니까?(-1 : 취소) ");
-
-            int SelectedItem = int.Parse(Console.ReadLine());
-            if (SelectedItem == -1)
-            {
-                DisplayShopItem();
-            }
-
-
-            Console.SetCursorPosition(50, 6);
-            Console.Write("몇 개 구매하시겠습니까? ");
-            int ItemCnt = int.Parse(Console.ReadLine());
-
-            int PaidGold = ItemCnt * ShopItemList[SelectedItem].Value;
-
-            if (PaidGold > TextRPG.player.Gold)
-            {
-                Console.SetCursorPosition(50, 7);
-                Console.WriteLine("현재 소지금이 부족합니다.");
-
-                Thread.Sleep(2000);
-
-                DisplayShopItem();
-            }
-            else
-            {
-                Console.SetCursorPosition(50, 7);
-                Console.WriteLine($"{ShopItemList[SelectedItem - 3].Name} {ItemCnt}개 구매하였습니다.");
-                Item BoughtItem = ShopItemList[SelectedItem - 3];
-
-                Thread.Sleep(2000);
-                TextRPG.player.Gold -= PaidGold;
-                TextRPG.AddItem(BoughtItem, ItemCnt);
-            }
-
-            Thread.Sleep(300);
-
-            Console.Clear();
-
-            GameManager.Instance.DisplayHome();
+                new Potion("소형 체력물약", 50, "사용 시 체력 20을 회복합니다.", 3, 3),
+                new Potion("중형 체력물약", 100, "사용 시 체력 40을 회복합니다.", 3, 4),
+                new Potion("대형 체력물약", 200, "사용 시 체력 80을 회복합니다.", 3, 5),
+                new Scroll("강제 탈출 스크롤", 150, "반드시 전투에서 도망칠 수 있습니다.", 4, 6)
+            };
         }
 
         public static void DisplayShopItem()
@@ -403,15 +336,85 @@ namespace MiniProject
                 GameManager.Instance.DisplayHome();
             }
         }
-        public static void InitializeShop()
+
+        public static void BuyItem()
         {
-            ShopItemList = new List<Item>
+            UI.DisplayGameUI();
+
+            Console.SetCursorPosition(1, 1);
+            Console.WriteLine("   상점 아이템 목록   ");
+            Console.SetCursorPosition(3, 2);
+            Console.WriteLine($"현재 소지금 : {TextRPG.player.Gold}");
+
+            int idx = 5;
+            foreach (var item in ShopItemList)
             {
-                new Potion("소형 체력물약", 50, "사용 시 체력 20을 회복합니다.", 3, 3),
-                new Potion("중형 체력물약", 100, "사용 시 체력 40을 회복합니다.", 3, 4),
-                new Potion("대형 체력물약", 200, "사용 시 체력 80을 회복합니다.", 3, 5),
-                new Scroll("강제 탈출 스크롤", 150, "반드시 전투에서 도망칠 수 있습니다.", 4, 6)
-            };
+                Console.SetCursorPosition(3, idx);
+                Console.WriteLine($"{item.Id} .  {item.Name}");
+                Console.SetCursorPosition(3, idx + 1);
+                Console.WriteLine($"구매가격 : {item.Value}");
+                Console.SetCursorPosition(3, idx + 2);
+                Console.WriteLine($"설명 : {item.Description}");
+                Console.SetCursorPosition(3, idx + 3);
+                Console.WriteLine("---------------------");
+                idx += 4;
+            }
+
+            Console.SetCursorPosition(50, 5);
+            Console.Write("어떤 상품을 구매하시겠습니까?(-1 : 취소) ");
+
+            int SelectedItem = int.Parse(Console.ReadLine());
+            if (SelectedItem == -1)
+            {
+                DisplayShopItem();
+            }
+
+
+            Console.SetCursorPosition(50, 6);
+            Console.Write("몇 개 구매하시겠습니까? ");
+            int ItemCnt = int.Parse(Console.ReadLine());
+
+            int PaidGold = ItemCnt * ShopItemList[SelectedItem-3].Value;
+
+            if (PaidGold > TextRPG.player.Gold)
+            {
+                Console.SetCursorPosition(50, 7);
+                Console.WriteLine("현재 소지금이 부족합니다.");
+
+                Thread.Sleep(2000);
+
+                DisplayShopItem();
+            }
+            else
+            {
+                Console.SetCursorPosition(50, 7);
+                Console.WriteLine($"{ShopItemList[SelectedItem - 3].Name} {ItemCnt}개 구매하였습니다.");
+
+                Thread.Sleep(2000);
+                player.Gold -= PaidGold;
+                TextRPG.AddItem(ShopItemList, SelectedItem-3, ItemCnt);
+            }
+
+            Thread.Sleep(300);
+
+            Console.Clear();
+
+            DisplayShopItem();
+        }
+
+        public static void AddItem(List<Item> list, int idx, int quantity)
+        {
+            Item item = list[idx];
+            int id = item.Id;
+            if (!Inventory.ContainsKey(id))
+            {
+                Inventory.Add(id, item);
+                item.Quantity = quantity;
+            }
+            else
+            {
+                Inventory[id].Quantity += quantity;
+            }
         }
 
         public static void SellItem()
@@ -422,25 +425,28 @@ namespace MiniProject
 
             Console.SetCursorPosition(1, 1);
             Console.WriteLine($"   인벤토리   ");
-            Console.SetCursorPosition(1, 2);
+            Console.SetCursorPosition(3, 2);
             Console.WriteLine($"현재 소지금 : {TextRPG.player.Gold}");
 
             int idx = 5;
-            foreach (var item in Player.Inventory)
+            foreach (var item in Inventory)
             {
-                Console.SetCursorPosition(1, idx);
-                Console.WriteLine($"{item.Value.Id}. {item.Value.Name} || 판매가격 : {item.Value.Value * 0.8} || 보유개수 : {item.Value.Quantity}");
+                Console.SetCursorPosition(3, idx);
+                Console.WriteLine($"{item.Value.Id}. {item.Value.Name} ({item.Value.Quantity})");
+                Console.SetCursorPosition(3, idx + 1);
+                Console.WriteLine($"판매가격 : {(int)item.Value.Value * 0.8}");
+                Console.SetCursorPosition(3, idx + 2);
                 Console.WriteLine("-------------------------------");
-                idx += 2;
+                idx += 3;
             }
 
             Console.SetCursorPosition(50, 5);
-            Console.Write("어떤 상품을 파시겠습니까? ");
+            Console.Write("어떤 상품을 파시겠습니까? (-1 : 취소)");
             int SelectedItem = int.Parse(Console.ReadLine());
 
             if (SelectedItem == -1)
             {
-                return;
+                DisplayShopItem();
             }
 
             if (SelectedItem == 0 || SelectedItem == 1 || SelectedItem == 2)
@@ -450,9 +456,8 @@ namespace MiniProject
 
                 Thread.Sleep(2000);
 
-                return;
+                SellItem();
             }
-
 
             Console.SetCursorPosition(50, 7);
             Console.Write("몇 개 판매하시겠습니까? ");
@@ -465,7 +470,7 @@ namespace MiniProject
 
                 Thread.Sleep(2000);
 
-                return;
+                SellItem();
             }
             else if (ItemCnt < Player.Inventory[SelectedItem].Quantity)
             {
@@ -490,6 +495,45 @@ namespace MiniProject
             Console.Clear();
 
             GameManager.Instance.DisplayHome();
+        }
+
+        public static void EnterDungeon()
+        {
+            Console.Clear();
+            UI.DisplayGameUI();
+
+            Console.SetCursorPosition(1, 2);
+            Utility.TextAlignment("던전 입구에 들어섰습니다.");
+
+            Console.SetCursorPosition(1, 24);
+            Utility.TextAlignment("[1] 늪지대 [2] 깊은숲 [3] 동굴 [4] 고성 [0] 돌아가기");
+
+            Console.SetCursorPosition(50, 30);
+            int input = int.Parse(Console.ReadLine());
+            if(input == 0)
+            {
+                GameManager.Instance.DisplayHome();
+            }
+            else if (input == 1)
+            {
+                Swamp swamp = new Swamp();
+                swamp.Start(player);
+            }
+            else if (input == 2)
+            {
+                Forest forest = new Forest();
+                forest.Start(player);
+            }
+            else if (input == 3)
+            {
+                Cave cave = new Cave();
+                cave.Start(player);
+            }
+            else if (input == 4)
+            {
+                FallenCastle fallenCastle = new FallenCastle();
+                fallenCastle.Start(player);
+            }
         }
     }
 }

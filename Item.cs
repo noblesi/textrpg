@@ -23,6 +23,11 @@ namespace MiniProject
 
         public List<string> Type = new List<string> { "Sword", "Spear", "Axe", "Healing", "Scroll" };
 
+        public Item()
+        {
+
+        }
+
         public Item(string name, int value, string description, int type, int id)
         {
             Name = name;
@@ -50,14 +55,16 @@ namespace MiniProject
         public int SPD {  get; set; }
         private int exp;
         private int maxExp = 100;
+        public bool isEquipped;
 
-        public Sword(string name, int type, int id, string description, int atk, int def, int spd) : base(name, type, id, description)
+        public Sword(string name, int type, int id, string description, int atk, int def, int spd, bool isEquipped) : base(name, type, id, description)
         {
             ATK = atk;
             DEF = def;
             SPD = spd;
             exp = 0;
             Quantity = 1;
+            this.isEquipped = isEquipped;
         }
 
         public void GetExp(MonsterType type)
@@ -131,13 +138,16 @@ namespace MiniProject
         public int SPD { get; set; }
         private int exp;
         private int maxExp = 100;
-        public Axe(string name, int type, int id, string description, int atk, int def, int spd) : base(name, type, id, description)
+        public bool isEquipped;
+
+        public Axe(string name, int type, int id, string description, int atk, int def, int spd, bool isEquipped) : base(name, type, id, description)
         {
             ATK = atk;
             DEF = def;
             SPD = spd;
             exp = 0;
             Quantity = 1;
+            this.isEquipped = isEquipped;
         }
         public void GetExp(MonsterType type)
         {
@@ -210,13 +220,16 @@ namespace MiniProject
         public int SPD { get; set; }
         private int exp;
         private int maxExp = 100;
-        public Spear(string name, int type, int id, string description, int atk, int def, int spd) : base(name, type, id, description)
+        public bool isEquipped;
+
+        public Spear(string name, int type, int id, string description, int atk, int def, int spd, bool isEquipped) : base(name, type, id, description)
         {
             ATK = atk;
             DEF = def;
             SPD = spd;
             exp = 0;
             Quantity = 1;
+            this.isEquipped = isEquipped;
         }
         public void GetExp(MonsterType type)
         {
@@ -297,29 +310,18 @@ namespace MiniProject
             {
                 case 3:
                     TextRPG.player.CurrentHp = Math.Min(TextRPG.player.CurrentHp + 20, TextRPG.player.Hp);
+                    Console.SetCursorPosition(50, 7);
+                    Console.WriteLine("체력 20회복");
                     break;
                 case 4:
                     TextRPG.player.CurrentHp = Math.Min(TextRPG.player.CurrentHp + 40, TextRPG.player.Hp);
+                    Console.SetCursorPosition(50, 7);
+                    Console.WriteLine("체력 40회복");
                     break;
                 case 5:
                     TextRPG.player.CurrentHp = Math.Min(TextRPG.player.CurrentHp + 80, TextRPG.player.Hp);
-                    break;
-            }
-        }
-
-        public static void Buff(int idx)
-        {
-            Item buffpotion = Player.Inventory[idx];
-            int CurAtk = TextRPG.player.Atk;
-            Player.isBuffed = true;
-
-            switch (buffpotion.Id)
-            {
-                case 6:
-                    TextRPG.player.Atk = CurAtk + 10;
-                    break;
-                case 7:
-                    TextRPG.player.Atk = CurAtk + 15;
+                    Console.SetCursorPosition(50, 7);
+                    Console.WriteLine("체력 80회복");
                     break;
             }
         }
@@ -334,7 +336,10 @@ namespace MiniProject
 
         public static void Escape(int idx)
         {
-            Console.WriteLine("강제로 전투에서 탈출하여 마을로 돌아갑니다.");
+            Console.SetCursorPosition(1, 30);
+            Utility.TextAlignment("강제로 전투에서 탈출하여 마을로 돌아갑니다.");
+
+            Thread.Sleep(3000);
 
             GameManager.Instance.DisplayHome();
         }

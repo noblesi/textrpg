@@ -1,4 +1,6 @@
-﻿namespace MiniProject
+﻿using System.Numerics;
+
+namespace MiniProject
 {
     public enum MonsterType
     {
@@ -9,7 +11,8 @@
     public class Monster
     {
         public string name { get; protected set; }
-        public int M_hp { get; set; }
+        public int M_curhp {  get;  set; }
+        public int M_hp { get; protected set; }
         public int M_atk { get; protected set; }
         public int M_def { get; protected set; }
         public int M_spd { get; protected set; }
@@ -21,36 +24,54 @@
             
         }
 
-        public virtual void Attack()
+        public virtual void Attack(Player player)
         {
             int DamageToPlayer;
             if(TextRPG.player.Def >= M_atk)
             {
                 DamageToPlayer = 0;
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
             else
             {
                 DamageToPlayer = M_atk - TextRPG.player.Def;
+                Console.SetCursorPosition(50, 11);
+                TextRPG.player.CurrentHp -= DamageToPlayer;
                 Console.WriteLine($"데미지를 {DamageToPlayer}만큼 입혔습니다.");
             }
 
-            TextRPG.player.CurrentHp -= DamageToPlayer;
+            Console.SetCursorPosition(3, 6);
+            Console.WriteLine("                                                ");
+            Console.SetCursorPosition(3, 6);
+            Console.WriteLine($"HP : {((player.CurrentHp > 0) ? player.CurrentHp : 0)} / {player.Hp}");
+
+            if (TextRPG.player.CurrentHp <= 0)
+            {
+                Console.SetCursorPosition(1, 30);
+                Utility.TextAlignment("전투에서 패배하였습니다.");
+                Console.SetCursorPosition(1, 31);
+                Console.WriteLine("소지금의 30%를 잃고 마을로 돌아갑니다.");
+
+                TextRPG.player.Gold = (int)(player.Gold * 0.7);
+
+                GameManager.Instance.DisplayHome();
+            }
         }
 
-        public virtual void CriticalAttack()
+        public virtual void CriticalAttack(Player player)
         {
             int DamageToPlayer;
-            if (TextRPG.player.Def >= M_atk)
+            if (player.Def >= M_atk)
             {
                 DamageToPlayer = 0;
             }
             else
             {
-                DamageToPlayer = M_atk - TextRPG.player.Def;
+                DamageToPlayer = M_atk - player.Def;
             }
 
-            TextRPG.player.CurrentHp -= DamageToPlayer * 2;
+            player.CurrentHp -= DamageToPlayer * 2;
 
         }
     }
@@ -64,6 +85,7 @@
                 case MonsterType.Normal:
                     name = "초록슬라임";
                     M_hp = 15;
+                    M_curhp = M_hp;
                     M_atk = 3;
                     M_def = -5;
                     M_spd = -10;
@@ -72,6 +94,7 @@
                 case MonsterType.Elite:
                     name = "파란슬라임";
                     M_hp = 25;
+                    M_curhp = M_hp;
                     M_atk = 5;
                     M_def = -2;
                     M_spd = -5;
@@ -80,6 +103,7 @@
                 case MonsterType.Boss:
                     name = "붉은슬라임";
                     M_hp = 35;
+                    M_curhp = M_hp;
                     M_atk = 8;
                     M_def = 3;
                     M_spd = 0;
@@ -88,16 +112,17 @@
             }
         }
 
-        public override void Attack()
+        public override void Attack(Player player)
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
 
             if (RandomHitRate > hitrate)
             {
-                base.Attack();
+                base.Attack(player);
             }
             else
             {
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine("공격에 실패하였습니다.");
             }
         }
@@ -112,6 +137,7 @@
                 case MonsterType.Normal:
                     name = "고블린전사";
                     M_hp = 40;
+                    M_curhp = M_hp;
                     M_atk = 5;
                     M_def = 3;
                     M_spd = 3;
@@ -120,6 +146,7 @@
                 case MonsterType.Elite:
                     name = "고블린투척병";
                     M_hp = 60;
+                    M_curhp = M_hp;
                     M_atk = 8;
                     M_def = 5;
                     M_spd = 6;
@@ -128,6 +155,7 @@
                 case MonsterType.Boss:
                     name = "고블린족장";
                     M_hp = 90;
+                    M_curhp = M_hp;
                     M_atk = 12;
                     M_def = 7;
                     M_spd = 9;
@@ -136,7 +164,7 @@
             }
         }
 
-        public override void Attack()
+        public override void Attack(Player player)
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
             double RandomCritRate = Utility.GetRandomDoubleNumber();
@@ -146,16 +174,17 @@
             {
                 if(RandomCritRate <= CritRate)
                 {
-                    base.CriticalAttack();
+                    base.CriticalAttack(player);
                 }
                 else
                 {
-                    base.Attack();
+                    base.Attack(player);
                 }
                 
             }
             else
             {
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine("공격에 실패하였습니다.");
             }
         }
@@ -170,6 +199,7 @@
                 case MonsterType.Normal:
                     name = "오크전사";
                     M_hp = 100;
+                    M_curhp = M_hp;
                     M_atk = 25;
                     M_def = -10;
                     M_spd = -5;
@@ -178,6 +208,7 @@
                 case MonsterType.Elite:
                     name = "오크부족장";
                     M_hp = 150;
+                    M_curhp = M_hp;
                     M_atk = 35;
                     M_def = -3;
                     M_spd = 0;
@@ -186,6 +217,7 @@
                 case MonsterType.Boss:
                     name = "오크족장";
                     M_hp = 180;
+                    M_curhp = M_hp;
                     M_atk = 40;
                     M_def = 3;
                     M_spd = 5;
@@ -194,7 +226,7 @@
             }
         }
 
-        public override void Attack()
+        public override void Attack(Player player)
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
             double RandomCritRate = Utility.GetRandomDoubleNumber();
@@ -204,16 +236,17 @@
             {
                 if (RandomCritRate <= CritRate)
                 {
-                    base.CriticalAttack();
+                    base.CriticalAttack(player);
                 }
                 else
                 {
-                    base.Attack();
+                    base.Attack(player);
                 }
 
             }
             else
             {
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine("공격에 실패하였습니다.");
             }
         }
@@ -228,6 +261,7 @@
                 case MonsterType.Normal:
                     name = "타락한보병견습";
                     M_hp = 200;
+                    M_curhp = M_hp;
                     M_atk = 30;
                     M_def = 5;
                     M_spd = 0;
@@ -236,6 +270,7 @@
                 case MonsterType.Elite:
                     name = "타락한보병";
                     M_hp = 250;
+                    M_curhp = M_hp;
                     M_atk = 40;
                     M_def = 10;
                     M_spd = 5;
@@ -244,6 +279,7 @@
                 case MonsterType.Boss:
                     name = "타락한기사단장";
                     M_hp = 300;
+                    M_curhp = M_hp;
                     M_atk = 55;
                     M_def = 15;
                     M_spd = 10;
@@ -252,7 +288,7 @@
             }
         }
 
-        public override void Attack()
+        public override void Attack(Player player)
         {
             double RandomHitRate = Utility.GetRandomDoubleNumber();
             double RandomCritRate = Utility.GetRandomDoubleNumber();
@@ -262,16 +298,17 @@
             {
                 if (RandomCritRate <= CritRate)
                 {
-                    base.CriticalAttack();
+                    base.CriticalAttack(player);
                 }
                 else
                 {
-                    base.Attack();
+                    base.Attack(player);
                 }
 
             }
             else
             {
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine("공격에 실패하였습니다.");
             }
         }
