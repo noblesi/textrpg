@@ -3,9 +3,6 @@
     public class GameManager
     {
         private static GameManager instance;
-        //private GameState currentState;
-        //private Player player;
-        //private Item item;
 
 
         public static GameManager Instance
@@ -29,28 +26,30 @@
             Console.WriteLine("[1] 게임시작");
             Console.SetCursorPosition(42, 24);
             Console.WriteLine("[2] 불러오기");
-            Console.SetCursorPosition(75, 24); //75
+            Console.SetCursorPosition(75, 24); 
             Console.WriteLine("[3] 게임종료");
 
             Console.SetCursorPosition(9, 30);
             int input = int.Parse(Console.ReadLine());
 
-            switch (input)
+            if (input == 1)
             {
-                case 1:
-                    Console.Clear();
-                    Thread.Sleep(500);
-                    TextRPG.InitStatus();
-                    TextRPG.InitSetting();
-                    break;
-                case 2:
-                    Console.Clear();
-                    Thread.Sleep(500);
-                    Utility.LoadGameData();
-                    DisplayHome();
-                    break;
-                case 3:
-                    break;
+                Console.Clear();
+                Thread.Sleep(500);
+                TextRPG.InitStatus();
+                TextRPG.InitSetting();
+            }
+            else if(input == 2) 
+            {
+                Console.Clear();
+                Thread.Sleep(500);
+                Utility.LoadGameData();
+                DisplayHome();
+            }
+            else if (input == 3)
+            {
+                Thread.Sleep(3000);
+                Environment.Exit(0);
             }
         }
 
@@ -58,8 +57,8 @@
         {
             Console.Clear();
             UI.DisplayGameUI();
-            Console.SetCursorPosition(3, 24);
-            Console.WriteLine("[1] 인벤토리\t[2] 스테이터스\t[3] 상점\t[4] 던전\t[5] 게임저장\t[6] 게임종료");
+            Console.SetCursorPosition(1, 24);
+            Console.WriteLine("[1] 인벤토리 / [2] 스테이터스 / [3] 상점 / [4] 던전 / [5] 게임저장 / [6] 게임종료");
 
             Console.SetCursorPosition(50, 30);
             int input = int.Parse(Console.ReadLine());
@@ -98,22 +97,5 @@
                 Environment.Exit(0);
             }
         }
-
-        
-
-            
-
-            
-
-            
-
-            
-
-        public void EndGame()
-        {
-            
-        }
-
-        
     }
 }

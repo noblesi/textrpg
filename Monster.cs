@@ -42,21 +42,11 @@ namespace MiniProject
             }
 
             Console.SetCursorPosition(3, 6);
-            Console.WriteLine("                                                ");
+            Console.WriteLine(new string(' ', Console.WindowWidth-60));
             Console.SetCursorPosition(3, 6);
             Console.WriteLine($"HP : {((player.CurrentHp > 0) ? player.CurrentHp : 0)} / {player.Hp}");
 
-            if (TextRPG.player.CurrentHp <= 0)
-            {
-                Console.SetCursorPosition(1, 30);
-                Utility.TextAlignment("전투에서 패배하였습니다.");
-                Console.SetCursorPosition(1, 31);
-                Console.WriteLine("소지금의 30%를 잃고 마을로 돌아갑니다.");
-
-                TextRPG.player.Gold = (int)(player.Gold * 0.7);
-
-                GameManager.Instance.DisplayHome();
-            }
+            
         }
 
         public virtual void CriticalAttack(Player player)

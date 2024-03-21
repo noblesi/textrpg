@@ -27,13 +27,11 @@ namespace MiniProject
         static string getName = "";
         public static bool isCreate = false;
 
-        
-
         public static void Main(string[] args)
         {
             GameManager.Instance.StartGame();
         }
-
+        #region 초기화면 세팅
         public static void InitStatus()
         {
             Random rand = new Random();
@@ -42,10 +40,9 @@ namespace MiniProject
             int RandomDef = rand.Next(5, 16);
             int RandomSpd = rand.Next(0, 11);
 
-            StatusDic.Add("Normal", new Player("User", "Normal", 100, 20, 10, 5, 1000)); ;
-            StatusDic.Add("Random", new Player("User", "Random", RandomHp, RandomAtk, RandomDef, RandomSpd, 1000));
+            StatusDic.Add("Normal", new Player("User", "Normal", 100, 20, 10, 5, 1000, 0, 100));
+            StatusDic.Add("Random", new Player("User", "Random", RandomHp, RandomAtk, RandomDef, RandomSpd, 1000, 0, 100));
         }
-
         public static void InitSetting()
         {
             UI.DisplayGameUI();
@@ -74,7 +71,6 @@ namespace MiniProject
             Console.Clear();
             SelectStatus();
         }
-
         public static void SelectStatus()
         {
             UI.DisplayGameUI();
@@ -88,12 +84,12 @@ namespace MiniProject
             int input = int.Parse(Console.ReadLine());
             if (input == 1)
             {
-                player = new Player(StatusDic["Normal"].Name, StatusDic["Normal"].StatusType, StatusDic["Normal"].CurrentHp, StatusDic["Normal"].Atk, StatusDic["Normal"].Def, StatusDic["Normal"].Spd, StatusDic["Normal"].Gold);
+                player = new Player(StatusDic["Normal"].Name, StatusDic["Normal"].StatusType, StatusDic["Normal"].CurrentHp, StatusDic["Normal"].Atk, StatusDic["Normal"].Def, StatusDic["Normal"].Spd, StatusDic["Normal"].Gold, StatusDic["Normal"].Exp, StatusDic["Normal"].MaxExp);
                 InitInventory();
             }
             else if (input == 2)
             {
-                player = new Player(StatusDic["Random"].Name, StatusDic["Random"].StatusType, StatusDic["Random"].CurrentHp, StatusDic["Random"].Atk, StatusDic["Random"].Def, StatusDic["Random"].Spd, StatusDic["Random"].Gold);
+                player = new Player(StatusDic["Random"].Name, StatusDic["Random"].StatusType, StatusDic["Random"].CurrentHp, StatusDic["Random"].Atk, StatusDic["Random"].Def, StatusDic["Random"].Spd, StatusDic["Random"].Gold, StatusDic["Random"].Exp, StatusDic["Random"].MaxExp);
                 InitInventory();
             }
             else
@@ -107,7 +103,9 @@ namespace MiniProject
 
             GameManager.Instance.DisplayHome();
         }
+        #endregion
 
+        #region 정보표현
         public static void DisplayUserStatus()
         {
             UI.DisplayGameUI();
@@ -135,7 +133,6 @@ namespace MiniProject
 
             GameManager.Instance.DisplayHome();
         }
-
         public static void DisplayUserInventory()
         {
             UI.DisplayGameUI();
@@ -176,20 +173,21 @@ namespace MiniProject
                 GameManager.Instance.DisplayHome();
             }
         }
+        #endregion
+
+        #region 인벤토리
         public static void InitInventory()
         {
             Inventory = new Dictionary<int, Item>();
 
-            Item AncientSword = new Sword("고대의 검", 0, 0, "유저와 함께 성장하는 성장형 검입니다.", 10, 0, 3, false);
-            Item AncientSpear = new Spear("고대의 창", 1, 1, "유저와 함께 성장하는 성장형 창입니다.", 15, 0, 0, false);
-            Item AncientAxe = new Axe("고대의 도끼", 2, 2, "유저와 함께 성장하는 성장형 도끼입니다.", 20, 0, -3, false);
+            Item AncientSword = new Sword("고대의 검", 0, 0, "유저와 함께 성장하는 성장형 검입니다.", 10, 0, 3);
+            Item AncientSpear = new Spear("고대의 창", 1, 1, "유저와 함께 성장하는 성장형 창입니다.", 15, 0, 0);
+            Item AncientAxe = new Axe("고대의 도끼", 2, 2, "유저와 함께 성장하는 성장형 도끼입니다.", 20, 0, -3);
 
             Inventory.Add(0, AncientSword);
             Inventory.Add(1, AncientSpear);
             Inventory.Add(2, AncientAxe);
         }
-
-
         public static void EquipWeapon()
         {
             Console.Clear();
@@ -234,7 +232,8 @@ namespace MiniProject
                     Thread.Sleep(1000);
                     Console.SetCursorPosition(50, 9);
                     Console.WriteLine("무기 교체를 취소합니다.");
-                    return;
+
+                    EquipWeapon();
                 }
             }
             else
@@ -250,21 +249,18 @@ namespace MiniProject
 
             if (EquippedItem is Sword sword)
             {
-                sword.isEquipped = true;
                 player.Atk += sword.ATK;
                 player.Def += sword.DEF;
                 player.Spd += sword.SPD;
             }
             else if (EquippedItem is Spear spear)
             {
-                spear.isEquipped = true;
                 player.Atk += spear.ATK;
                 player.Def += spear.DEF;
                 player.Spd += spear.SPD;
             }
             else if (EquippedItem is Axe axe)
             {
-                axe.isEquipped = true;
                 player.Atk += axe.ATK;
                 player.Def += axe.DEF;
                 player.Spd += axe.SPD;
@@ -276,7 +272,9 @@ namespace MiniProject
 
             GameManager.Instance.DisplayHome();
         }
+        #endregion
 
+        #region 상점
         public static void InitializeShop()
         {
             ShopItemList = new List<Item>
@@ -287,7 +285,6 @@ namespace MiniProject
                 new Scroll("강제 탈출 스크롤", 150, "반드시 전투에서 도망칠 수 있습니다.", 4, 6)
             };
         }
-
         public static void DisplayShopItem()
         {
             InitializeShop();
@@ -336,7 +333,6 @@ namespace MiniProject
                 GameManager.Instance.DisplayHome();
             }
         }
-
         public static void BuyItem()
         {
             UI.DisplayGameUI();
@@ -401,7 +397,6 @@ namespace MiniProject
 
             DisplayShopItem();
         }
-
         public static void AddItem(List<Item> list, int idx, int quantity)
         {
             Item item = list[idx];
@@ -416,7 +411,6 @@ namespace MiniProject
                 Inventory[id].Quantity += quantity;
             }
         }
-
         public static void SellItem()
         {
             Console.Clear();
@@ -496,7 +490,9 @@ namespace MiniProject
 
             GameManager.Instance.DisplayHome();
         }
+        #endregion
 
+        #region 던전
         public static void EnterDungeon()
         {
             Console.Clear();
@@ -534,6 +530,143 @@ namespace MiniProject
                 FallenCastle fallenCastle = new FallenCastle();
                 fallenCastle.Start(player);
             }
+        }
+        #endregion
+
+        #region 전투 중 아이템 사용
+        public static void ItemUseInBattle()
+        {
+            Console.Clear();
+            UI.DisplayGameUI();
+
+            Console.SetCursorPosition(3, 2);
+            Console.WriteLine("   사용 가능한 아이템 목록   ");
+
+            int idx = 5;
+            foreach (var item in Inventory)
+            {
+                if (item.Key >= 3)
+                {
+                    Console.SetCursorPosition(3, idx);
+                    Console.WriteLine($"{item.Key}. {item.Value.Name} ({item.Value.Quantity})");
+                    Console.SetCursorPosition(3, idx + 1);
+                    Console.WriteLine($"{item.Value.Description}");
+                    Console.SetCursorPosition(3, idx + 2);
+                    Console.WriteLine("-----------------------");
+                    idx += 3;
+                }
+            }
+
+            Console.SetCursorPosition(50, 5);
+            Console.Write("아이템 선택 : (취소 : -1)");
+
+            int UsedItemIdx = int.Parse(Console.ReadLine());
+            if (UsedItemIdx == -1)
+            {
+                Battle.Start(player, monster);
+            }
+
+            Console.SetCursorPosition(50, 6);
+            Console.WriteLine($"{Inventory[UsedItemIdx].Name}을(를) 사용합니다.");
+
+            switch (Inventory[UsedItemIdx]._type)
+            {
+                case 3:
+                    Potion.Healing(UsedItemIdx);
+                    Inventory[UsedItemIdx].Quantity--;
+                    break;
+                case 4:
+                    Scroll.Escape(UsedItemIdx);
+                    Inventory[UsedItemIdx].Quantity--;
+                    break;
+            }
+        }
+        #endregion
+
+        public static void GetExp(MonsterType type)
+        {
+            switch (type)
+            {
+                case MonsterType.Normal:
+                    player.Exp += 20;
+                    break;
+                case MonsterType.Elite:
+                    player.Exp += 35;
+                    break;
+                case MonsterType.Boss:
+                    player.Exp += 50;
+                    break;
+            }
+
+            if (player.Exp >= player.MaxExp)
+            {
+                ResetExp();
+                UpdateLv();
+            }
+        }
+
+        public static void ResetExp()
+        {
+            player.Exp = 0;
+            player.MaxExp += 20;
+        }
+
+        public static void UpdateLv()
+        {
+            Console.Clear();
+            UI.DisplayGameUI();
+
+            Thread.Sleep(2000);
+            int abilitycnt = 5;
+
+            Console.SetCursorPosition(3, 5);
+            Console.WriteLine("레벨이 상승했습니다.");
+            Console.SetCursorPosition(3, 6);
+            Console.WriteLine("상승시킬 능력치를 고르세요.");
+            Console.SetCursorPosition(3, 7);
+            Console.Write("[1] 공격력 : ");
+            int UseAtkcnt = int.Parse(Console.ReadLine());
+            Console.SetCursorPosition(3, 8);
+            Console.Write("[2] 방어력 : ");
+            int UseDefcnt = int.Parse(Console.ReadLine());
+            Console.SetCursorPosition(3, 9);
+            Console.Write("[3] 속도 : ");
+            int UseSpdcnt = int.Parse(Console.ReadLine());
+
+            int UsedAbilityCnt = UseAtkcnt + UseDefcnt + UseSpdcnt;
+
+            if(UsedAbilityCnt == abilitycnt)
+            {
+                Console.SetCursorPosition(3, 10);
+                Console.WriteLine($"공격력이 {UseAtkcnt}만큼 상승했습니다.");
+                Console.SetCursorPosition(3, 11);
+                Console.WriteLine($"방어력이 {UseDefcnt}만큼 상승했습니다.");
+                Console.SetCursorPosition(3, 12);
+                Console.WriteLine($"속도가 {UseSpdcnt}만큼 상승했습니다.");
+
+                player.Atk += UseAtkcnt;
+                player.Def += UseDefcnt;
+                player.Spd += UseSpdcnt;
+            }
+            else if(UsedAbilityCnt < abilitycnt)
+            {
+                Console.SetCursorPosition(3, 10);
+                Console.WriteLine("스탯포인트를 모두 사용해주세요");
+
+                Thread.Sleep(3000);
+
+                UpdateLv();
+            }
+            else if(UsedAbilityCnt > abilitycnt)
+            {
+                Console.SetCursorPosition(3, 10);
+                Console.WriteLine("스탯포인트를 초과해서 사용했습니다.");
+
+                Thread.Sleep(3000);
+
+                UpdateLv();
+            }
+
         }
     }
 }
